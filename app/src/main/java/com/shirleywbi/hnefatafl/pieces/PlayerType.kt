@@ -1,5 +1,5 @@
 package com.shirleywbi.hnefatafl.pieces
 
-enum class PieceType {
+enum class PlayerType {
     DEFENDER, ATTACKER
 }
