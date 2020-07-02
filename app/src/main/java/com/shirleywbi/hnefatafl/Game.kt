@@ -4,12 +4,13 @@ import com.shirleywbi.hnefatafl.pieces.PlayerType
 
 class Game {
 
-    var gameBoard: Board = Board()
     lateinit var player: PlayerType
+    lateinit var gameBoard: Board
     var isAttackerTurn: Boolean = true
 
-    fun selectPlayer(type: PlayerType) : Unit {
+    fun selectPlayer(type: PlayerType) {
         player = type
+        gameBoard = Board(player)
     }
 
     fun nextTurn() : Unit {
