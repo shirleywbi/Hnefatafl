@@ -1,16 +1,52 @@
 package com.shirleywbi.hnefatafl
 
 import com.shirleywbi.hnefatafl.pieces.ChessPiece
+import com.shirleywbi.hnefatafl.pieces.KingPiece
 import com.shirleywbi.hnefatafl.pieces.PlayerType
 
 class Board {
 
+    val boardWidth = 11
+    val boardHeight = 11
+
     var pieces: ArrayList<ChessPiece> = arrayListOf()
-    var occupied = Array<Array<Boolean?>>(11) {arrayOfNulls(11)}
+    var occupied = Array(boardHeight) { BooleanArray(boardWidth) }
 
     constructor() {
         setupBoard()
         setupPieces()
+    }
+
+    /**
+     * Returns true if:
+     * (1) TODO: It is the player's piece
+     * (2) Nothing is in the way
+     * (3) TODO: Non-king pieces cannot move to restricted positions
+     */
+    fun canMove(piece: ChessPiece, x: Int, y: Int): Boolean {
+        if (x == piece.x && y == piece.y || // movement: none
+            x != piece.x && y != piece.y) { // movement: diagonal
+            return false
+        } else if (x == piece.x) { // movement: vertical
+            for (i in 1..(piece.x - x)) {
+                if(occupied[y+i][x]) return false
+            }
+        } else if (y == piece.y) { // movement: horizontal
+            for (i in 1..(piece.x - x)) {
+                if (occupied[y][x+i]) return false
+            }
+        }
+        return true
+    }
+
+    fun move(piece: ChessPiece, x: Int, y: Int) : Unit {
+        if (canMove(piece, x, y)) {
+            occupied[piece.x][piece.y] = false
+            piece.move(x, y)
+            occupied[x][y] = true
+        } else {
+            throw Exception("Invalid move")
+        }
     }
 
     private fun setupBoard(): Unit {

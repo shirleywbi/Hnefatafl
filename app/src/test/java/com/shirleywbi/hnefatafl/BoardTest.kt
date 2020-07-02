@@ -14,4 +14,11 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+    // Tests - Initialization
+    // - Board layout is correct
+    // - Pieces are correct
+
+    // Tests - movement
+    // What positions we can move to
 }
