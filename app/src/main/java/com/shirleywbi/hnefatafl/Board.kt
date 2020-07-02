@@ -84,7 +84,11 @@ class Board {
         for (x in 3..7) {
             if (x == 3 || x == 7) pieces.add(ChessPiece(x, 5, PlayerType.DEFENDER))
             if (x == 4 || x == 6) for (y in 4..6) pieces.add(ChessPiece(x, y, PlayerType.DEFENDER))
-            if (x == 5) for (y in 3..7) pieces.add(ChessPiece(x, y, PlayerType.DEFENDER))
+            if (x == 5) {
+                for (y in 3..4) pieces.add(ChessPiece(x, y, PlayerType.DEFENDER))
+                pieces.add(KingPiece(5, 5))
+                for (y in 6..7) pieces.add(ChessPiece(x, y, PlayerType.DEFENDER))
+            }
         }
     }
 }
