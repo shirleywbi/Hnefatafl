@@ -1,16 +1,10 @@
-package com.shirleywbi.hnefatafl
+package com.shirleywbi.hnefatafl.pieces
 
-class KingPiece(x: Int, y: Int, type: PlayerType = PlayerType.DEFENDER) : ChessPiece(x, y, type) {
+class KingPiece(x: Int, y: Int, type: PlayerType = PlayerType.DEFENDER) : Piece(x, y, type) {
 
-    override fun canMove(newX: Int, newY: Int): Boolean {
-        // cannot move on top of another piece
-        // cannot move past other board pieces
-        // x and y stay the same
-        //
-        return true
+    // King is on the corner of the board
+    fun hasWon(): Boolean {
+        return (x == 0 && y == 0) || (x == 10 && y == 0) || (x == 0 && y == 10) || (x == 10 && y == 10)
     }
 
-    fun win() {
-
-    }
 }
