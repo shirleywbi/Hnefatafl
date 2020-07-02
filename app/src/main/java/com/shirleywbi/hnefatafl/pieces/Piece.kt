@@ -7,7 +7,7 @@ abstract class Piece(var x: Int, var y: Int, var type: PlayerType) {
      * (1) It is the player's piece
      * (2) Nothing is in the way
      */
-    open fun canMove(newX: Int, newY: Int, occupied: Array<BooleanArray>, player: PlayerType): Boolean {
+    open fun canMove(newX: Int, newY: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PlayerType): Boolean {
         if (type != player) return false
 
         if (newX == x && newY == y || // movement: none
@@ -15,11 +15,11 @@ abstract class Piece(var x: Int, var y: Int, var type: PlayerType) {
             return false
         } else if (newX == x) { // movement: vertical
             for (i in 1..(x - newX)) {
-                if(occupied[newY+i][newX]) return false
+                if(layoutMap.containsKey(Pair(newX, newY + i))) return false
             }
         } else if (newY == y) { // movement: horizontal
             for (i in 1..(x - newX)) {
-                if (occupied[newY][newX+i]) return false
+                if (layoutMap.containsKey(Pair(newX + i, newY))) return false
             }
         }
         return true
