@@ -30,20 +30,32 @@ abstract class Piece(var x: Int, var y: Int, var type: PlayerType) {
         y = newY
     }
 
-    fun capture(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PlayerType) {
-        singleCapture(x, y, 1, 0, layoutMap, player)
-        singleCapture(x, y, -1, 0, layoutMap, player)
-        singleCapture(x, y, 0, 1, layoutMap, player)
-        singleCapture(x, y, 0, -1, layoutMap, player)
+    fun capture(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PlayerType): List<Piece> {
+        var captures: ArrayList<Piece> = arrayListOf()
+        if (isCapture(x, y, 1, 0, layoutMap, player)) {
+            layoutMap[Pair(x + 1, y)]?.let { captures.add(it) }
+            layoutMap.remove(Pair(x + 1, y))
+        }
+        if (isCapture(x, y, -1, 0, layoutMap, player)) {
+            layoutMap[Pair(x - 1, y)]?.let { captures.add(it) }
+            layoutMap.remove(Pair(x - 1, y))
+        }
+        if (isCapture(x, y, 0, 1, layoutMap, player)) {
+            layoutMap[Pair(x, y + 1)]?.let { captures.add(it) }
+            layoutMap.remove(Pair(x, y + 1))
+        }
+        if (isCapture(x, y, 0, -1, layoutMap, player)) {
+            layoutMap[Pair(x, y - 1)]?.let { captures.add(it) }
+            layoutMap.remove(Pair(x, y - 1))
+        }
+        return captures
     }
 
     // Capture if piece is surrounded vertically or horizontally by a piece or an empty restricted spot
-    private fun singleCapture(x: Int, y: Int, xOffset: Int, yOffset: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PlayerType) {
-        if (layoutMap[Pair(x + xOffset, y + yOffset)]?.type != player &&
+    private fun isCapture(x: Int, y: Int, xOffset: Int = 0, yOffset: Int = 0, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PlayerType): Boolean {
+        return (layoutMap[Pair(x + xOffset, y + yOffset)]?.type != player &&
             (layoutMap[Pair(x + xOffset * 2, y + yOffset * 2)]?.type == player ||
-            (!layoutMap.containsKey(Pair(x + xOffset * 2, y + yOffset * 2)) && inRestricted(x + xOffset * 2, y + yOffset * 2)))) {
-            layoutMap.remove(Pair(x + xOffset, y + yOffset))
-        }
+            (!layoutMap.containsKey(Pair(x + xOffset * 2, y + yOffset * 2)) && inRestricted(x + xOffset * 2, y + yOffset * 2))))
     }
 
     // Returns true if position is in a board corner or center

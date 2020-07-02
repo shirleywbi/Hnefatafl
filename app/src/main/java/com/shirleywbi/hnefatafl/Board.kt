@@ -7,6 +7,7 @@ import com.shirleywbi.hnefatafl.pieces.PlayerType
 
 class Board {
 
+    var isGameOver = false
     var layoutMap: HashMap<Pair<Int, Int>, Piece> = hashMapOf()
     var player: PlayerType
 
@@ -15,22 +16,39 @@ class Board {
         setupPieces()
     }
 
-    private fun canMove(piece: ChessPiece, x: Int, y: Int): Boolean {
+    private fun canMove(piece: Piece, x: Int, y: Int): Boolean {
         return piece.canMove(x, y, layoutMap, player)
     }
 
-    fun move(piece: ChessPiece, x: Int, y: Int) {
+    // TODO: Handle exceptions
+    fun move(piece: Piece, x: Int, y: Int) {
         if (canMove(piece, x, y)) {
             layoutMap.remove(Pair(piece.x, piece.y))
             piece.move(x, y)
             layoutMap[Pair(x, y)] = piece
-            piece.capture(x, y, layoutMap, player)
+            checkDefenderWin(piece)
+            checkAttackerWin(piece, x, y)
         } else {
             throw Exception("Invalid move")
         }
     }
 
-    private fun setupPieces(): Unit {
+    private fun checkDefenderWin(piece: Piece) {
+        if (piece is KingPiece && piece.hasWon()) {
+            isGameOver = true
+            throw Exception("Game over. ${if (player == PlayerType.DEFENDER) "You have won!" else "You have lost. Please try again!"}.")
+        }
+    }
+
+    private fun checkAttackerWin(piece: Piece, x: Int, y: Int) {
+        if (piece.type == PlayerType.ATTACKER) {
+            var captures = piece.capture(x, y, layoutMap, player)
+            captures.forEach { capture -> if (capture is KingPiece) isGameOver = true}
+            if (isGameOver) throw Exception("Game over. ${if (player == PlayerType.ATTACKER) "You have won!" else "You have lost. Please try again!"}.")
+        }
+    }
+
+    private fun setupPieces() {
         // set up attackers
         for (x in 0..10) {
             if (x in 3..7) {
