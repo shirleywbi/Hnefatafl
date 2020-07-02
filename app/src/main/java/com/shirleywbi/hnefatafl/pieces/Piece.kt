@@ -37,11 +37,11 @@ abstract class Piece(var x: Int, var y: Int, var type: PlayerType) {
         singleCapture(x, y, 0, -1, layoutMap, player)
     }
 
-    // Capture if piece is surrounded vertically or horizontally by a piece or restricted spot
+    // Capture if piece is surrounded vertically or horizontally by a piece or an empty restricted spot
     private fun singleCapture(x: Int, y: Int, xOffset: Int, yOffset: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PlayerType) {
         if (layoutMap[Pair(x + xOffset, y + yOffset)]?.type != player &&
             (layoutMap[Pair(x + xOffset * 2, y + yOffset * 2)]?.type == player ||
-            inRestricted(x + xOffset * 2, y + yOffset * 2))) {
+            (!layoutMap.containsKey(Pair(x + xOffset * 2, y + yOffset * 2)) && inRestricted(x + xOffset * 2, y + yOffset * 2)))) {
             layoutMap.remove(Pair(x + xOffset, y + yOffset))
         }
     }
