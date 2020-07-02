@@ -30,12 +30,6 @@ abstract class Piece(var x: Int, var y: Int, var type: PlayerType) {
         y = newY
     }
 
-    fun getCaptured() {
-        x = -1
-        y = -1
-    }
-
-
     fun capture(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PlayerType) {
         singleCapture(x, y, 1, 0, layoutMap, player)
         singleCapture(x, y, -1, 0, layoutMap, player)

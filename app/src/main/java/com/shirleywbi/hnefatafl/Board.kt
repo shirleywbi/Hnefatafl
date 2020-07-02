@@ -15,7 +15,7 @@ class Board {
         setupPieces()
     }
 
-    fun canMove(piece: ChessPiece, x: Int, y: Int): Boolean {
+    private fun canMove(piece: ChessPiece, x: Int, y: Int): Boolean {
         return piece.canMove(x, y, layoutMap, player)
     }
 
@@ -24,6 +24,7 @@ class Board {
             layoutMap.remove(Pair(piece.x, piece.y))
             piece.move(x, y)
             layoutMap[Pair(x, y)] = piece
+            piece.capture(x, y, layoutMap, player)
         } else {
             throw Exception("Invalid move")
         }
