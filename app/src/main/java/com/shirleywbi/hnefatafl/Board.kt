@@ -8,16 +8,14 @@ import com.shirleywbi.hnefatafl.pieces.PlayerType
 class Board {
 
     var isGameOver = false
+    var isAttackerTurn = true
+
     var layoutMap: HashMap<Pair<Int, Int>, Piece> = hashMapOf()
     var player: PlayerType
 
     constructor(player: PlayerType) {
         this.player = player
         setupPieces()
-    }
-
-    private fun canMove(piece: Piece, x: Int, y: Int): Boolean {
-        return piece.canMove(x, y, layoutMap, player)
     }
 
     // TODO: Handle exceptions
@@ -28,9 +26,18 @@ class Board {
             layoutMap[Pair(x, y)] = piece
             checkDefenderWin(piece)
             checkAttackerWin(piece, x, y)
+            nextTurn()
         } else {
             throw Exception("Invalid move")
         }
+    }
+
+    private fun nextTurn() {
+        isAttackerTurn = !isAttackerTurn
+    }
+
+    private fun canMove(piece: Piece, x: Int, y: Int): Boolean {
+        return piece.canMove(x, y, layoutMap, player)
     }
 
     private fun checkDefenderWin(piece: Piece) {
