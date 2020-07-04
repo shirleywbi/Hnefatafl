@@ -4,20 +4,19 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
-import com.shirleywbi.hnefatafl.util.getDps
+import android.widget.RelativeLayout
 
-class BoardCellView : View {
+open class BoardCellView : View {
 
-    constructor(context: Context) : this(context, null)
+    constructor(size: Int, context: Context) : this(size, context, null)
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        initialize(context, attrs)
+    constructor(size: Int, context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        setDimensions(size)
+        this.setBackgroundColor(Color.BLACK)
     }
 
-    private fun initialize(context: Context, attrs: AttributeSet?) {
-        val length: Int = getDps(50, this)
-        this.layoutParams = ViewGroup.LayoutParams(length, length)
-        this.setBackgroundColor(Color.BLACK)
+    fun setDimensions(size: Int) {
+        val params = RelativeLayout.LayoutParams(size, size)
+        this.layoutParams = params
     }
 }
