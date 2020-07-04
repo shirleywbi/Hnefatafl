@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#BC7000</color>
-    <color name="colorPrimaryDark">#A53815</color>
-    <color name="colorAccent">#FFC107</color>
+    <color name="colorPrimary">#9D907E</color>
+    <color name="colorPrimaryDark">#6A5E4F</color>
+    <color name="colorAccent">#F7EFE6</color>
 
-    <color name="boardColor">#BC7000</color>
-    <color name="boardOutline">#A53815</color>
-    <color name="boardDarkColor">#FFC107</color>
+    <color name="boardColor">#F7EFE6</color>
+    <color name="boardOutline">#6A5E4F</color>
+    <color name="boardDarkColor">#9D907E</color>
 </resources>
