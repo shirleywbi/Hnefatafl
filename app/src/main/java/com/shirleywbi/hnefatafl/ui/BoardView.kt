@@ -16,9 +16,7 @@ class BoardView : ConstraintLayout {
     private fun initialize(context: Context, attrs: AttributeSet?) {
         var cells: ArrayList<BoardCellView> = arrayListOf()
 
-        // TODO: Get actual width
-        // TODO: DPS is uneven, may need absolute but flexible board as a whole
-        val size: Int = getDps(250, this) / 11
+        val size: Int = getDps(400, this) / 11
 
         for (x in 0..10) {
             for (y in 0..10) {
@@ -33,6 +31,6 @@ class BoardView : ConstraintLayout {
         }
 
         cells.forEach { cell -> this.addView(cell)}
-
     }
+
 }
