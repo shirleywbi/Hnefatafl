@@ -3,4 +3,8 @@
     <color name="colorPrimary">#BC7000</color>
     <color name="colorPrimaryDark">#A53815</color>
     <color name="colorAccent">#FFC107</color>
+
+    <color name="boardColor">#BC7000</color>
+    <color name="boardOutline">#A53815</color>
+    <color name="boardDarkColor">#FFC107</color>
 </resources>

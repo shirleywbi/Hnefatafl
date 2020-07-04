@@ -1,7 +1,6 @@
 package com.shirleywbi.hnefatafl.ui
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.shirleywbi.hnefatafl.util.getDps
@@ -34,5 +33,6 @@ class BoardView : ConstraintLayout {
         }
 
         cells.forEach { cell -> this.addView(cell)}
+
     }
 }

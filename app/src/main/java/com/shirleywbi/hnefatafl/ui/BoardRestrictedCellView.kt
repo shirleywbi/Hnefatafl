@@ -1,8 +1,8 @@
 package com.shirleywbi.hnefatafl.ui
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
+import com.shirleywbi.hnefatafl.R
 
 class BoardRestrictedCellView : BoardCellView {
 
@@ -10,6 +10,6 @@ class BoardRestrictedCellView : BoardCellView {
 
     constructor(size: Int, context: Context, attrs: AttributeSet?) : super(size, context, attrs) {
         super.setDimensions(size)
-        this.setBackgroundColor(Color.BLUE)
+        this.setImageResource(R.drawable.board_restricted_cell)
     }
 }
