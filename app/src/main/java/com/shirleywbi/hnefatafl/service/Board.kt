@@ -11,10 +11,9 @@ class Board {
     var isAttackerTurn = true
 
     var layoutMap: HashMap<Pair<Int, Int>, Piece> = hashMapOf()
-    var player: PlayerType
+    lateinit var player: PlayerType
 
-    constructor(player: PlayerType) {
-        this.player = player
+    constructor() {
         setupPieces()
     }
 
