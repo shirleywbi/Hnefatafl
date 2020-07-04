@@ -3,7 +3,7 @@ package com.shirleywbi.hnefatafl.service
 import com.shirleywbi.hnefatafl.service.pieces.ChessPiece
 import com.shirleywbi.hnefatafl.service.pieces.KingPiece
 import com.shirleywbi.hnefatafl.service.pieces.Piece
-import com.shirleywbi.hnefatafl.service.pieces.PlayerType
+import com.shirleywbi.hnefatafl.service.pieces.PieceType
 
 class Board {
 
@@ -11,7 +11,7 @@ class Board {
     var isAttackerTurn = true
 
     var layoutMap: HashMap<Pair<Int, Int>, Piece> = hashMapOf()
-    lateinit var player: PlayerType
+    lateinit var piece: PieceType
 
     constructor() {
         setupPieces()
@@ -36,21 +36,21 @@ class Board {
     }
 
     private fun canMove(piece: Piece, x: Int, y: Int): Boolean {
-        return piece.canMove(x, y, layoutMap, player)
+        return piece.canMove(x, y, layoutMap, this.piece)
     }
 
     private fun checkDefenderWin(piece: Piece) {
         if (piece is KingPiece && piece.hasWon()) {
             isGameOver = true
-            throw Exception("Game over. ${if (player == PlayerType.DEFENDER) "You have won!" else "You have lost. Please try again!"}.")
+            throw Exception("Game over. ${if (this.piece == PieceType.DEFENDER) "You have won!" else "You have lost. Please try again!"}.")
         }
     }
 
     private fun checkAttackerWin(piece: Piece, x: Int, y: Int) {
-        if (piece.type == PlayerType.ATTACKER) {
-            var captures = piece.capture(x, y, layoutMap, player)
+        if (piece.type == PieceType.ATTACKER) {
+            var captures = piece.capture(x, y, layoutMap, this.piece)
             captures.forEach { capture -> if (capture is KingPiece) isGameOver = true}
-            if (isGameOver) throw Exception("Game over. ${if (player == PlayerType.ATTACKER) "You have won!" else "You have lost. Please try again!"}.")
+            if (isGameOver) throw Exception("Game over. ${if (this.piece == PieceType.ATTACKER) "You have won!" else "You have lost. Please try again!"}.")
         }
     }
 
@@ -58,25 +58,25 @@ class Board {
         // set up attackers
         for (x in 0..10) {
             if (x in 3..7) {
-                layoutMap[Pair(x, 0)] = ChessPiece(x, 0, PlayerType.ATTACKER)
-                layoutMap[Pair(x, 10)] = ChessPiece(x, 10, PlayerType.ATTACKER)
+                layoutMap[Pair(x, 0)] = ChessPiece(x, 0, PieceType.ATTACKER)
+                layoutMap[Pair(x, 10)] = ChessPiece(x, 10, PieceType.ATTACKER)
             }
             if (x == 5) {
-                layoutMap[Pair(x, 1)] = ChessPiece(x, 1, PlayerType.ATTACKER)
-                layoutMap[Pair(x, 9)] = ChessPiece(x, 9, PlayerType.ATTACKER)
+                layoutMap[Pair(x, 1)] = ChessPiece(x, 1, PieceType.ATTACKER)
+                layoutMap[Pair(x, 9)] = ChessPiece(x, 9, PieceType.ATTACKER)
             }
-            if (x == 0 || x == 10) for (y in 3..7) layoutMap[Pair(x, y)] = ChessPiece(x, y, PlayerType.ATTACKER)
-            if (x == 1 || x == 9) layoutMap[Pair(x, 5)] = ChessPiece(x, 5, PlayerType.ATTACKER)
+            if (x == 0 || x == 10) for (y in 3..7) layoutMap[Pair(x, y)] = ChessPiece(x, y, PieceType.ATTACKER)
+            if (x == 1 || x == 9) layoutMap[Pair(x, 5)] = ChessPiece(x, 5, PieceType.ATTACKER)
         }
 
         // set up defenders
         for (x in 3..7) {
-            if (x == 3 || x == 7) layoutMap[Pair(x, 5)] = ChessPiece(x, 5, PlayerType.DEFENDER)
-            if (x == 4 || x == 6) for (y in 4..6) layoutMap[Pair(x, y)] = ChessPiece(x, y, PlayerType.DEFENDER)
+            if (x == 3 || x == 7) layoutMap[Pair(x, 5)] = ChessPiece(x, 5, PieceType.DEFENDER)
+            if (x == 4 || x == 6) for (y in 4..6) layoutMap[Pair(x, y)] = ChessPiece(x, y, PieceType.DEFENDER)
             if (x == 5) {
-                for (y in 3..4) layoutMap[Pair(x, y)] = ChessPiece(x, y, PlayerType.DEFENDER)
+                for (y in 3..4) layoutMap[Pair(x, y)] = ChessPiece(x, y, PieceType.DEFENDER)
                 layoutMap[Pair(5, 5)] = KingPiece(5, 5)
-                for (y in 6..7) layoutMap[Pair(x, y)] = ChessPiece(x, y, PlayerType.DEFENDER)
+                for (y in 6..7) layoutMap[Pair(x, y)] = ChessPiece(x, y, PieceType.DEFENDER)
             }
         }
     }

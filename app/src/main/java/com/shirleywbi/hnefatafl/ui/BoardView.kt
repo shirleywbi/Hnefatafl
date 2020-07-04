@@ -4,9 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.shirleywbi.hnefatafl.service.pieces.Piece
-import com.shirleywbi.hnefatafl.service.pieces.PlayerType
+import com.shirleywbi.hnefatafl.service.pieces.PieceType
 import com.shirleywbi.hnefatafl.ui.pieces.AttackerPieceView
 import com.shirleywbi.hnefatafl.ui.pieces.DefenderPieceView
+import com.shirleywbi.hnefatafl.ui.pieces.KingPieceView
 import com.shirleywbi.hnefatafl.ui.pieces.PieceView
 import com.shirleywbi.hnefatafl.util.getDps
 
@@ -40,16 +41,20 @@ class BoardView : ConstraintLayout {
     }
 
     // TODO: Observer to watch pieces change
-    // TODO: Add King Piece View
     private fun addPieces(layoutMap: HashMap<Pair<Int, Int>, Piece>) {
         var attackerCount = 0
         var defenderCount = 0
 
         for ((pos, piece) in layoutMap) {
-            var pieceView : PieceView = if (piece.type == PlayerType.ATTACKER) AttackerPieceView(size, context) else DefenderPieceView(size, context)
-            var type = PlayerType.ATTACKER
+            var pieceView : PieceView =
+                when (piece.type) {
+                    PieceType.ATTACKER -> AttackerPieceView(size, context)
+                    PieceType.DEFENDER -> DefenderPieceView(size, context)
+                    PieceType.KING -> KingPieceView(size, context)
+                }
+            var type = PieceType.ATTACKER
 
-            pieceView.tag = if (type == PlayerType.ATTACKER) "attacker-${attackerCount++}" else "defender-${defenderCount++}"
+            pieceView.tag = if (type == PieceType.ATTACKER) "attacker-${attackerCount++}" else "defender-${defenderCount++}"
             pieceView.x = (pos.first * size).toFloat()
             pieceView.y = (pos.second * size).toFloat()
             this.addView(pieceView)

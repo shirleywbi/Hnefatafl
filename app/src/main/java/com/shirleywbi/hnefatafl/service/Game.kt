@@ -1,15 +1,15 @@
 package com.shirleywbi.hnefatafl.service
 
-import com.shirleywbi.hnefatafl.service.pieces.PlayerType
+import com.shirleywbi.hnefatafl.service.pieces.PieceType
 
 class Game {
 
-    lateinit var player: PlayerType
+    lateinit var piece: PieceType
     var gameBoard: Board = Board()
 
-    fun selectPlayer(type: PlayerType) {
-        player = type
-        gameBoard.player = type
+    fun selectPlayer(type: PieceType) {
+        piece = type
+        gameBoard.piece = type
     }
 
 }

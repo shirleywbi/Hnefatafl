@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.shirleywbi.hnefatafl.service.Game
-import com.shirleywbi.hnefatafl.service.pieces.PlayerType
+import com.shirleywbi.hnefatafl.service.pieces.PieceType
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,11 +20,11 @@ class MainActivity : AppCompatActivity() {
 
     fun setPlayerSelectListeners() {
         attacker_btn.setOnClickListener {
-            game.selectPlayer(PlayerType.ATTACKER)
+            game.selectPlayer(PieceType.ATTACKER)
             hidePlayerSelectButtons()
         }
         defender_btn.setOnClickListener {
-            game.selectPlayer(PlayerType.DEFENDER)
+            game.selectPlayer(PieceType.DEFENDER)
             hidePlayerSelectButtons()
         }
     }
