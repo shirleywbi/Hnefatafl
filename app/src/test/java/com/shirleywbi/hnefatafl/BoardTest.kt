@@ -1,8 +1,8 @@
 package com.shirleywbi.hnefatafl
 
+import com.shirleywbi.hnefatafl.service.Board
 import org.junit.Test
 
-import org.junit.Assert.*
 import org.junit.Before
 
 /**

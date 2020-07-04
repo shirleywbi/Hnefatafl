@@ -1,4 +1,4 @@
-package com.shirleywbi.hnefatafl.pieces
+package com.shirleywbi.hnefatafl.service.pieces
 
 class KingPiece(x: Int, y: Int, type: PlayerType = PlayerType.DEFENDER) : Piece(x, y, type) {
 

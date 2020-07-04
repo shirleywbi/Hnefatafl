@@ -1,9 +1,9 @@
-package com.shirleywbi.hnefatafl
+package com.shirleywbi.hnefatafl.service
 
-import com.shirleywbi.hnefatafl.pieces.ChessPiece
-import com.shirleywbi.hnefatafl.pieces.KingPiece
-import com.shirleywbi.hnefatafl.pieces.Piece
-import com.shirleywbi.hnefatafl.pieces.PlayerType
+import com.shirleywbi.hnefatafl.service.pieces.ChessPiece
+import com.shirleywbi.hnefatafl.service.pieces.KingPiece
+import com.shirleywbi.hnefatafl.service.pieces.Piece
+import com.shirleywbi.hnefatafl.service.pieces.PlayerType
 
 class Board {
 

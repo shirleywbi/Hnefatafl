@@ -1,6 +1,7 @@
-package com.shirleywbi.hnefatafl
+package com.shirleywbi.hnefatafl.service
 
-import com.shirleywbi.hnefatafl.pieces.PlayerType
+import com.shirleywbi.hnefatafl.service.Board
+import com.shirleywbi.hnefatafl.service.pieces.PlayerType
 
 class Game {
 

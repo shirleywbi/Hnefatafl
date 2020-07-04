@@ -1,4 +1,4 @@
-package com.shirleywbi.hnefatafl.pieces
+package com.shirleywbi.hnefatafl.service.pieces
 
 abstract class Piece(var x: Int, var y: Int, var type: PlayerType) {
 

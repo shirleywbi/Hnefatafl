@@ -1,4 +1,4 @@
-package com.shirleywbi.hnefatafl.pieces
+package com.shirleywbi.hnefatafl.service.pieces
 
 class ChessPiece(x: Int, y: Int, type: PlayerType): Piece(x, y, type) {
 
