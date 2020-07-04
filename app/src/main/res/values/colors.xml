@@ -7,4 +7,7 @@
     <color name="boardColor">#F7EFE6</color>
     <color name="boardOutline">#6A5E4F</color>
     <color name="boardDarkColor">#9D907E</color>
+
+    <color name="attackerPiece">#000000</color>
+    <color name="defenderPiece">#FFFFFF</color>
 </resources>
