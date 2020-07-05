@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Hnefatafl</string>
+    <string name="attacker">Attacker</string>
+    <string name="defender">Defender</string>
+    <string name="select_player">Choose your player</string>
 </resources>
