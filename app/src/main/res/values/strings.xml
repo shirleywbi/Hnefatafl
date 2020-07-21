@@ -3,4 +3,7 @@
     <string name="attacker">Attacker</string>
     <string name="defender">Defender</string>
     <string name="select_player">Choose your player</string>
+    <string name="how_to_play">How to Play</string>
+    <string name="how_to_play_defender">Defender Instructions</string>
+    <string name="how_to_play_attacker">Attacker Instructions</string>
 </resources>
