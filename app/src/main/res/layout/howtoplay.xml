@@ -14,12 +14,15 @@
 
         <Button
             android:id="@+id/htp_close_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="X"
+            android:background="@null"
+            android:text="x"
+            android:textSize="25sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,35 +54,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/htp_title" />
 
-        <Button
+        <ImageButton
             android:id="@+id/htp_left_nav_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="10dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_arrow"
             android:text="&lt;"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/htp_right_nav_btn" />
+            app:layout_constraintEnd_toStartOf="@+id/htp_right_nav_btn"
+            tools:srcCompat="@drawable/icon_arrow"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/htp_right_nav_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="10dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:scaleX="-1"
+            android:scaleY="-1"
+            android:src="@drawable/icon_arrow"
             android:text="&gt;"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:srcCompat="@drawable/icon_arrow"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="201dp"
-        android:layout_height="258dp"
+        android:layout_width="262dp"
+        android:layout_height="303dp"
+        android:src="@drawable/viking_default"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/viking_default" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
