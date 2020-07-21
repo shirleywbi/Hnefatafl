@@ -1,10 +1,12 @@
 package com.shirleywbi.hnefatafl
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.shirleywbi.hnefatafl.service.Game
 import com.shirleywbi.hnefatafl.service.pieces.PieceType
+import com.shirleywbi.hnefatafl.ui.pages.HowToPlayActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +18,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setPlayerSelectListeners()
+
+        more_info_btn.setOnClickListener {
+            startActivity(Intent(this, HowToPlayActivity::class.java))
+        }
     }
 
     fun setPlayerSelectListeners() {
