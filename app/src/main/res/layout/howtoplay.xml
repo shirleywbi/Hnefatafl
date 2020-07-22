@@ -57,38 +57,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/htp_title" />
 
-        <ImageButton
-            android:id="@+id/htp_left_nav_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="@dimen/padding_edge"
-            android:layout_marginRight="@dimen/padding_edge"
-            android:layout_marginBottom="10dp"
-            android:background="@null"
-            android:scaleType="centerInside"
-            android:src="@drawable/icon_arrow"
-            android:text="&lt;"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/htp_right_nav_btn"
-            tools:srcCompat="@drawable/icon_arrow"/>
-
-        <ImageButton
-            android:id="@+id/htp_right_nav_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="@dimen/padding_edge"
-            android:layout_marginRight="@dimen/padding_edge"
-            android:layout_marginBottom="10dp"
-            android:background="@null"
-            android:scaleType="centerInside"
-            android:scaleX="-1"
-            android:scaleY="-1"
-            android:src="@drawable/icon_arrow"
-            android:text="&gt;"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:srcCompat="@drawable/icon_arrow"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
