@@ -3,7 +3,36 @@
     <string name="attacker">Attacker</string>
     <string name="defender">Defender</string>
     <string name="select_player">Choose your player</string>
+
+    <!--Game Guide-->
     <string name="how_to_play">How to Play</string>
-    <string name="how_to_play_defender">Defender Instructions</string>
-    <string name="how_to_play_attacker">Attacker Instructions</string>
+    <string name="htp_goal_details">There are two types of Vikings in this world, <b>Attackers</b> and <b>Defenders</b>.
+        \n\n\The Attacker\'s goal is to <u>capture the king</u>.
+        \n\n\The Defender\'s goal is to <u>help the king escape</u>.
+    </string>
+    <string name="htp_your_turn">Your Turn</string>
+    <string name="htp_your_turn_details">Attackers have the first move. Afterwards, players take turns.
+        \n\n\During your turn, you can move your piece: up, down, left or right.
+    </string>
+    <string name="htp_capture">Capture</string>
+    <string name="htp_capture_details">All pieces except for the king are captured if flanked by two enemy pieces, or between a restricted square.
+        A piece is only captured if the trap is closed by the aggressor’s move.
+    </string>
+    <string name="htp_restricted_squares">Restricted Squares</string>
+    <string name="htp_restricted_squares_details">Only the king can occupy the restricted squares.
+        Restricted squares are hostile, meaning they can replace one of the two pieces taking part in a capture.
+    </string>
+    <string name="htp_defender_win">Defender\'s Win</string>
+    <string name="htp_defender_win_details">If the king escapes to any corner square, the defenders win.
+    </string>
+    <string name="htp_attacker_win">Attacker\'s Win</string>
+    <string name="htp_attacker_win_details">Attackers have several ways to win:
+        \n\n\1. Surround the king
+        \n\n\2. Surround ALL remaining defenders
+    </string>
+    <string name="htp_game_over">Game Over</string>
+    <string name="htp_game_over_details">There are a few other ways to end the game:
+        \n\n\1.	If you can no longer move your pieces, you lose the game.
+        \n\n\2.	If you can’t end the game or there are X repetitions, it is a draw.
+    </string>
 </resources>
