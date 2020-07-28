@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.shirleywbi.hnefatafl.service.Game
 import com.shirleywbi.hnefatafl.service.pieces.PieceType
-import com.shirleywbi.hnefatafl.ui.pages.HowToPlayActivity
+import com.shirleywbi.hnefatafl.ui.howToPlay.HowToPlayActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
