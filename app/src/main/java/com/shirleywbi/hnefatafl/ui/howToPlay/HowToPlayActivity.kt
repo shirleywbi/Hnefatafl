@@ -27,7 +27,9 @@ class HowToPlayActivity: AppCompatActivity() {
                 htp_tab_layout.getTabAt(tab.position)?.setIcon(R.drawable.tab_dot_default)
             }
 
-            override fun onTabReselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                htp_tab_layout.getTabAt(tab.position)?.setIcon(R.drawable.tab_dot_selected)
+            }
         }
 
         htp_close_btn.setOnClickListener{
@@ -44,7 +46,7 @@ class HowToPlayActivity: AppCompatActivity() {
         htp_pager.adapter = HowToPlayPagerAdapter(supportFragmentManager, htp_tab_layout.tabCount)
         htp_pager.addOnPageChangeListener(TabLayoutOnPageChangeListener(htp_tab_layout))
         htp_tab_layout.addOnTabSelectedListener(listener)
-        // TODO: Figure out why this line is not working
+        htp_tab_layout.getTabAt(1)?.select()
         htp_tab_layout.getTabAt(0)?.select()
     }
 
