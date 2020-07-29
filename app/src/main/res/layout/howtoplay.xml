@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/main_layout"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/htp_close_btn"
         android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="@dimen/padding_edge"
-        android:layout_marginEnd="@dimen/padding_edge"
-        android:layout_marginRight="@dimen/padding_edge"
+        android:layout_height="0dp"
         android:background="@null"
         android:text="x"
         android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/htp_pager"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/htp_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-1dp" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/htp_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:elevation="6dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabGravity="center"
+        app:tabIndicator="@null"
+        app:tabPaddingEnd="0dp"
+        app:tabPaddingStart="0dp" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/htp_pager"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/htp_tab_layout"/>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
