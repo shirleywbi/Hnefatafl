@@ -9,16 +9,17 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
+    <ImageView
         android:id="@+id/htp_close_btn"
         android:layout_width="30dp"
-        android:layout_height="0dp"
-        android:background="@null"
-        android:text="x"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/htp_pager"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/padding_edge"
+        android:layout_marginEnd="@dimen/padding_edge"
+        android:layout_marginRight="@dimen/padding_edge"
+        android:background="@android:drawable/ic_menu_close_clear_cancel"
+        android:contentDescription="close button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/htp_pager" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/htp_pager"
@@ -33,6 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/padding_edge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:tabGravity="center"
         app:tabIndicator="@null"
