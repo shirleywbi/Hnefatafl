@@ -5,19 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/htp_title"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/padding_edge"
-        android:layout_marginLeft="@dimen/padding_edge"
+    <ImageView
+        android:id="@+id/htp_close_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="@dimen/padding_edge"
         android:layout_marginEnd="@dimen/padding_edge"
         android:layout_marginRight="@dimen/padding_edge"
+        android:background="@android:drawable/ic_menu_close_clear_cancel"
+        android:contentDescription="close button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/htp_title"
+        android:layout_width="345dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="@dimen/padding_edge"
+        android:layout_marginLeft="@dimen/padding_edge"
+        android:layout_marginTop="@dimen/padding_edge"
         android:text=""
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/htp_close_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

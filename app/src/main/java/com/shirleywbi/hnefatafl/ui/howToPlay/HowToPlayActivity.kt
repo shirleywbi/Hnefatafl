@@ -11,13 +11,14 @@ import kotlinx.android.synthetic.main.howtoplay.*
 class HowToPlayActivity: AppCompatActivity() {
 
     private val tabCount = 6
+    private lateinit var listener: OnTabSelectedListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.howtoplay)
 
         // Add tab listener
-        var listener: OnTabSelectedListener = object : OnTabSelectedListener {
+        listener = object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 htp_pager.currentItem = tab.position
                 htp_tab_layout.getTabAt(tab.position)?.setIcon(R.drawable.tab_dot_selected)
@@ -32,11 +33,6 @@ class HowToPlayActivity: AppCompatActivity() {
             }
         }
 
-        htp_close_btn.setOnClickListener{
-            htp_tab_layout.removeOnTabSelectedListener(listener)
-            finish()
-        }
-
         // Add tabs
         for (i: Int in 0 until tabCount) {
             htp_tab_layout.addTab(htp_tab_layout.newTab().setIcon(R.drawable.tab_dot_default))
@@ -48,6 +44,11 @@ class HowToPlayActivity: AppCompatActivity() {
         htp_tab_layout.addOnTabSelectedListener(listener)
         htp_tab_layout.getTabAt(1)?.select()
         htp_tab_layout.getTabAt(0)?.select()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        htp_tab_layout.removeOnTabSelectedListener(listener)
     }
 
 }
