@@ -11,34 +11,29 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var game = Game()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        setPlayerSelectListeners()
 
         more_info_btn.setOnClickListener {
             startActivity(Intent(this, HowToPlayActivity::class.java))
         }
     }
 
-    fun setPlayerSelectListeners() {
-        attacker_btn.setOnClickListener {
-            game.selectPlayer(PieceType.ATTACKER)
-            hidePlayerSelectButtons()
-        }
-        defender_btn.setOnClickListener {
-            game.selectPlayer(PieceType.DEFENDER)
-            hidePlayerSelectButtons()
-        }
+    // For pieces
+    fun setListeners() {
+//        val views = List<View> =
+//            listOf(view1, view2, etc.)
+//
+//        for (view in views) {
+//            view.setOnClickListener { dragAndDrop(it) }
+//        }
     }
 
-    fun hidePlayerSelectButtons() {
-        choose_player_text.visibility = View.GONE
-        attacker_btn.visibility = View.GONE
-        defender_btn.visibility = View.GONE
+    fun dragAndDrop(view: View) {
+        when (view.id) {
+            // Do something
+        }
     }
 
 }
