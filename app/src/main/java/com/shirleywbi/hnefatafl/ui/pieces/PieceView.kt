@@ -48,66 +48,6 @@ open class PieceView: androidx.appcompat.widget.AppCompatImageView {
         view.visibility = View.INVISIBLE
     }
 
-    private fun allowDrag(dragDestinationView: View) {
-        val originalBackground = dragDestinationView.background
-        dragDestinationView.setOnDragListener { view, event ->
-        when(event.action) {
-            DragEvent.ACTION_DRAG_STARTED -> {
-                if (event.clipDescription.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                    return@setOnDragListener true
-                }
-                return@setOnDragListener false
-            }
-            DragEvent.ACTION_DRAG_ENTERED -> {
-                view.setBackgroundResource(R.color.boardDarkColor)
-                view.invalidate() // redraw itself
-                return@setOnDragListener true
-            }
-            DragEvent.ACTION_DRAG_LOCATION -> return@setOnDragListener true
-            DragEvent.ACTION_DRAG_EXITED -> {
-                // undo whatever you did in Drag Started & entered
-                view.background = originalBackground
-                view.invalidate()
-                return@setOnDragListener true
-            }
-            DragEvent.ACTION_DROP -> {
-                val clipDataItem = event.clipData.getItemAt(0)
-                val dragData = clipDataItem.text.toString()
-
-                view.background = originalBackground
-                view.invalidate()
-
-                val draggabbleView = event.localState as View
-                with(draggabbleView) {
-                    val owner = parent as ViewGroup
-                    if (owner != dragDestinationView) {
-                        owner.removeView(this)
-                        val container = view as FrameLayout
-                        container.addView(draggabbleView)
-                        draggabbleView.visibility = View.VISIBLE
-                        return@setOnDragListener true
-                    }
-                }
-            }
-            DragEvent.ACTION_DRAG_ENDED -> {
-                view.background = originalBackground
-                view.invalidate()
-
-                if (event.result) {
-                    // drag worked
-                } else {
-                    // drag didnt work
-                    val draggabbleView = event.localState as View
-                    draggabbleView.visibility = View.VISIBLE
-
-                }
-            }
-        }
-
-        false
-        }
-    }
-
     private fun setDimensions(size: Int) {
         val params = RelativeLayout.LayoutParams(size, size)
         this.layoutParams = params
