@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.gamestart_layout.more_info_btn
 
 class GameStartActivity: AppCompatActivity() {
 
+    private val gameKey = "GAME"
     private var game = Game()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,11 +30,17 @@ class GameStartActivity: AppCompatActivity() {
     private fun setPlayerSelectListeners() {
         attacker_btn.setOnClickListener {
             game.selectPlayer(PieceType.ATTACKER)
-            startActivity(Intent(this, MainActivity::class.java))
+            startGame()
         }
         defender_btn.setOnClickListener {
             game.selectPlayer(PieceType.DEFENDER)
-            startActivity(Intent(this, MainActivity::class.java))
+            startGame()
         }
+    }
+
+    private fun startGame() {
+        var intent = Intent(this, MainActivity::class.java)
+        intent.putExtra(gameKey, game)
+        startActivity(intent)
     }
 }

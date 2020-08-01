@@ -1,8 +1,9 @@
 package com.shirleywbi.hnefatafl.service
 
 import com.shirleywbi.hnefatafl.service.pieces.PieceType
+import java.io.Serializable
 
-class Game {
+class Game: Serializable {
 
     lateinit var piece: PieceType
     var gameBoard: Board = Board()

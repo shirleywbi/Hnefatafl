@@ -12,7 +12,7 @@
         tools:context=".MainActivity">
 
         <com.shirleywbi.hnefatafl.ui.BoardView
-            android:id="@+id/board"
+            android:id="@+id/board_layout"
             android:layout_width="396dp"
             android:layout_height="399dp"
             app:layout_constraintBottom_toBottomOf="parent"

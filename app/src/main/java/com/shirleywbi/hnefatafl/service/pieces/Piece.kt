@@ -1,6 +1,8 @@
 package com.shirleywbi.hnefatafl.service.pieces
 
-abstract class Piece(var x: Int, var y: Int, var type: PieceType) {
+import java.io.Serializable
+
+abstract class Piece(var x: Int, var y: Int, var type: PieceType): Serializable {
 
     /**
      * Returns true if:

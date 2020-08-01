@@ -1,6 +1,8 @@
 package com.shirleywbi.hnefatafl.service.pieces
 
-enum class PieceType {
+import java.io.Serializable
+
+enum class PieceType: Serializable {
     ATTACKER,
     DEFENDER,
     KING

@@ -4,8 +4,9 @@ import com.shirleywbi.hnefatafl.service.pieces.ChessPiece
 import com.shirleywbi.hnefatafl.service.pieces.KingPiece
 import com.shirleywbi.hnefatafl.service.pieces.Piece
 import com.shirleywbi.hnefatafl.service.pieces.PieceType
+import java.io.Serializable
 
-class Board {
+class Board: Serializable {
 
     var isGameOver = false
     var isAttackerTurn = true
@@ -15,6 +16,13 @@ class Board {
 
     constructor() {
         setupPieces()
+    }
+
+    fun canMove(piece: Piece?, x: Int, y: Int): Boolean {
+        if (piece != null) {
+            return piece.canMove(x, y, layoutMap, this.piece)
+        }
+        return false
     }
 
     // TODO: Handle exceptions
@@ -33,10 +41,6 @@ class Board {
 
     private fun nextTurn() {
         isAttackerTurn = !isAttackerTurn
-    }
-
-    private fun canMove(piece: Piece, x: Int, y: Int): Boolean {
-        return piece.canMove(x, y, layoutMap, this.piece)
     }
 
     private fun checkDefenderWin(piece: Piece) {
