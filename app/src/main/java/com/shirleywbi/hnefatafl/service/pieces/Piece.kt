@@ -20,7 +20,7 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType): Serializable 
                 if(layoutMap.containsKey(Pair(newX, newY + i))) return false
             }
         } else if (newY == y) { // movement: horizontal
-            for (i in 1..(x - newX)) {
+            for (i in 1..(y - newY)) {
                 if (layoutMap.containsKey(Pair(newX + i, newY))) return false
             }
         }
