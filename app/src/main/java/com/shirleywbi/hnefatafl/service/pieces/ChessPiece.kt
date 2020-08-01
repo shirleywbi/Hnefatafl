@@ -9,7 +9,7 @@ class ChessPiece(x: Int, y: Int, type: PieceType): Piece(x, y, type) {
         layoutMap: HashMap<Pair<Int, Int>, Piece>,
         piece: PieceType
     ): Boolean {
-        if ((x == 0 && y == 0) || (x == 10 && y == 0) || (x == 0 && y == 10) || (x == 10 && y == 10)) return false
+        if ((newX == 0 && newY == 0) || (newX == 10 && newY == 0) || (newX == 0 && newY == 10) || (newX == 10 && newY == 10)) return false
         return super.canMove(newX, newY, layoutMap, piece)
     }
 
