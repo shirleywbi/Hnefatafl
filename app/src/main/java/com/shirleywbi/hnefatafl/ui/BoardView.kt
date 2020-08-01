@@ -92,8 +92,8 @@ class BoardView : ConstraintLayout {
                 DragEvent.ACTION_DROP -> {
                     Log.i("[DRAG]", "ACTION_DROP")
                     var pieceView = event.localState as View
-                    pieceView.x = event.x
-                    pieceView.y = event.y
+                    pieceView.x = event.x - size/2
+                    pieceView.y = event.y - size/2
                     pieceView.visibility = View.VISIBLE
                     return@setOnDragListener true
                 }
