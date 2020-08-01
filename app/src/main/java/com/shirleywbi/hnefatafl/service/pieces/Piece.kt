@@ -1,6 +1,7 @@
 package com.shirleywbi.hnefatafl.service.pieces
 
 import java.io.Serializable
+import kotlin.math.abs
 
 abstract class Piece(var x: Int, var y: Int, var type: PieceType): Serializable {
 
@@ -10,18 +11,24 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType): Serializable 
      * (2) Nothing is in the way
      */
     open fun canMove(newX: Int, newY: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): Boolean {
-        if (type != piece) return false
+        if (type != piece || layoutMap.containsKey(Pair(newX, newY))) return false
 
         if (newX == x && newY == y || // movement: none
             newX != x && newY != y) { // movement: diagonal
             return false
         } else if (newX == x) { // movement: vertical
-            for (i in 1..(x - newX)) {
-                if(layoutMap.containsKey(Pair(newX, newY + i))) return false
+            val dir = if (y < newY) 1 else -1
+            for (i in 1..abs(y - newY)) {
+                if(layoutMap.containsKey(Pair(x, y + i * dir))) {
+                    return false
+                }
             }
         } else if (newY == y) { // movement: horizontal
-            for (i in 1..(y - newY)) {
-                if (layoutMap.containsKey(Pair(newX + i, newY))) return false
+            val dir = if (x < newX) 1 else -1
+            for (i in 1..abs(x - newX)) {
+                if (layoutMap.containsKey(Pair(x + i * dir, y))) {
+                    return false
+                }
             }
         }
         return true
