@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.DragEvent
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginLeft
+import androidx.core.view.marginTop
 import com.shirleywbi.hnefatafl.service.Board
 import com.shirleywbi.hnefatafl.service.pieces.Piece
 import com.shirleywbi.hnefatafl.service.pieces.PieceType
@@ -35,7 +37,7 @@ class BoardView : ConstraintLayout {
     private fun addCells() {
         for (x in 0..10) {
             for (y in 0..10) {
-                var cell: BoardCellView = if ((x == 0 && y == 0) || (x == 10 && y == 0) ||
+                val cell: BoardCellView = if ((x == 0 && y == 0) || (x == 10 && y == 0) ||
                     (x == 0 && y == 10) || (x == 10 && y == 10) || (x == 5 && y == 5))
                     BoardRestrictedCellView(size, context) else BoardCellView(size, context)
                 cell.tag = "cell-$x-$y"
@@ -52,13 +54,13 @@ class BoardView : ConstraintLayout {
         var defenderCount = 0
 
         for ((pos, piece) in layoutMap) {
-            var pieceView : PieceView =
+            val pieceView : PieceView =
                 when (piece.type) {
                     PieceType.ATTACKER -> AttackerPieceView(size, context)
                     PieceType.DEFENDER -> DefenderPieceView(size, context)
                     PieceType.KING -> KingPieceView(size, context)
                 }
-            var type = PieceType.ATTACKER
+            val type = PieceType.ATTACKER
 
             pieceView.tag = if (type == PieceType.ATTACKER) "attacker-${attackerCount++}" else "defender-${defenderCount++}"
             pieceView.x = (pos.first * size).toFloat()
@@ -91,16 +93,18 @@ class BoardView : ConstraintLayout {
                 }
                 DragEvent.ACTION_DROP -> {
                     Log.i("[DRAG]", "ACTION_DROP")
-                    var pieceView = event.localState as View
-                    pieceView.x = event.x - size/2
-                    pieceView.y = event.y - size/2
+                    val pieceView = event.localState as View
+                    val boardOffsetX = this.x + pieceView.marginLeft
+                    val boardOffsetY = 0.toFloat()
+                    pieceView.x = ((event.x - boardOffsetX)/size).toInt() * size + boardOffsetX
+                    pieceView.y = ((event.y - boardOffsetY)/size).toInt() * size + boardOffsetY
                     pieceView.visibility = View.VISIBLE
                     return@setOnDragListener true
                 }
                 DragEvent.ACTION_DRAG_ENDED -> {
                     Log.i("[DRAG]", "ACTION_DRAG_ENDED")
                     if (!event.result) {
-                        var draggableView = event.localState as View
+                        val draggableView = event.localState as View
                         draggableView.visibility = View.VISIBLE
                     }
                 }
