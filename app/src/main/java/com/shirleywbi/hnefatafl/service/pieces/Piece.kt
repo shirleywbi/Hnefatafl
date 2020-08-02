@@ -77,8 +77,11 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
         return captures
     }
 
-    // Capture if piece is surrounded vertically or horizontally by a piece or an empty restricted spot
+    // Return true if piece is flanked vertically or horizontally by a piece or an empty restricted spot, otherwise return false
     private fun isCaptured(x: Int, y: Int, xOffset: Int = 0, yOffset: Int = 0, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): Boolean {
+        val noAdjacentPiece = !layoutMap.containsKey(Pair(x + xOffset, y + yOffset))
+        if (noAdjacentPiece) return false
+
         val adjacentPieceIsDifferent = layoutMap[Pair(x + xOffset, y + yOffset)]?.type != piece
         val hasPieceFlank = layoutMap[Pair(x + xOffset * 2, y + yOffset * 2)]?.type == piece
         val hasCellFlank = !layoutMap.containsKey(Pair(x + xOffset * 2, y + yOffset * 2)) && inRestricted(x + xOffset * 2, y + yOffset * 2)
