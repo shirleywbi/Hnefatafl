@@ -39,40 +39,85 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
         y = newY
     }
 
-    fun capturePositionsAndPieces(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): HashMap<Pair<Int, Int>, Piece> {
+    fun capturePositionsAndPieces(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PieceType): HashMap<Pair<Int, Int>, Piece> {
         val captures: HashMap<Pair<Int, Int>, Piece> = hashMapOf()
-        handleCapture(x, y, 1, 0, layoutMap, piece, captures)
-        handleCapture(x, y, -1, 0, layoutMap, piece, captures)
-        handleCapture(x, y, 0, 1, layoutMap, piece, captures)
-        handleCapture(x, y, 0, -1, layoutMap, piece, captures)
+        val surroundingPos = getSurroundingPos(Pair(x, y))
+        for (pos in surroundingPos) {
+            val hasAdjacentEnemy = layoutMap.containsKey(pos) && layoutMap[pos]?.type != player
+            if (hasAdjacentEnemy) {
+                handleCapture(Pair(x, y), layoutMap[pos]!!, layoutMap, player, captures)
+            }
+        }
         return captures
     }
 
-    /** Handle piece capture by:
-     * (1) Adding position and piece to captures
-     * (2) Remove position from layoutMap
-     * */
-    private fun handleCapture(x: Int, y: Int, xOffset: Int = 0, yOffset: Int = 0, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType, captures: HashMap<Pair<Int, Int>, Piece>) {
-        if (isCaptured(x, y, xOffset, yOffset, layoutMap, piece)) {
-            captures[Pair(x + xOffset, y + yOffset)] = layoutMap[Pair(x + xOffset, y + yOffset)]!!
-            layoutMap.remove(Pair(x + xOffset, y + yOffset))
+    private fun handleCapture(movedPiecePos: Pair<Int, Int>, possibleCapture: Piece, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PieceType, captures: HashMap<Pair<Int, Int>, Piece>) {
+        if (possibleCapture is ChessPiece) {
+            handlePieceCapture(movedPiecePos, possibleCapture, layoutMap, player, captures)
+        } else {
+            handleKingCapture(movedPiecePos, layoutMap, player, captures)
         }
     }
 
-    // Return true if piece is flanked vertically or horizontally by a piece or an empty restricted spot, otherwise return false
-    private fun isCaptured(x: Int, y: Int, xOffset: Int = 0, yOffset: Int = 0, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): Boolean {
-        val noAdjacentPiece = !layoutMap.containsKey(Pair(x + xOffset, y + yOffset))
-        if (noAdjacentPiece) return false
+    // Remove piece and store in captures if piece is flanked vertically or horizontally by a piece of empty restricted spot
+    private fun handlePieceCapture(movedPiecePos: Pair<Int, Int>, possibleCapture: Piece, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PieceType, captures: HashMap<Pair<Int, Int>, Piece>) {
+        val xOffset = possibleCapture.x - movedPiecePos.first
+        val yOffset = possibleCapture.y - movedPiecePos.second
 
-        val adjacentPieceIsDifferent = layoutMap[Pair(x + xOffset, y + yOffset)]?.type != piece
-        val hasPieceFlank = layoutMap[Pair(x + xOffset * 2, y + yOffset * 2)]?.type == piece
-        val hasCellFlank = !layoutMap.containsKey(Pair(x + xOffset * 2, y + yOffset * 2)) && inRestricted(x + xOffset * 2, y + yOffset * 2)
-        return adjacentPieceIsDifferent && (hasPieceFlank || hasCellFlank)
+        val flankPos = Pair(possibleCapture.x + xOffset, possibleCapture.y + yOffset)
+        val isFlankedByEnemyPiece = layoutMap.containsKey(flankPos) && layoutMap[flankPos]?.type == player
+        val isFlankedByCell = inRestricted(flankPos)
+        if (isFlankedByEnemyPiece || isFlankedByCell) {
+            captures[Pair(possibleCapture.x, possibleCapture.y)] = possibleCapture
+            layoutMap.remove(Pair(possibleCapture.x, possibleCapture.y))
+        }
+    }
+
+    /**
+     * King is captured as an individual piece when:
+     * (1) Flanked in all 4 directions
+     * (2) Flanked in 3 directions + throne
+     * (3) Flanked in 3 directions + edge (if only King remaining)
+     */
+    private fun handleKingCapture(movedPiecePos: Pair<Int, Int>, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PieceType, captures: HashMap<Pair<Int, Int>, Piece>) {
+        if (player == PieceType.DEFENDER) return
+        var kingPos: Pair<Int, Int> = Pair(-1, -1)
+        var surroundingPos: List<Pair<Int, Int>> = getSurroundingPos(movedPiecePos)
+        for (pos in surroundingPos) {
+            if (layoutMap[pos] is KingPiece) {
+                kingPos = pos
+            }
+        }
+        if (kingPos == Pair(-1, -1)) return
+        surroundingPos = getSurroundingPos(kingPos)
+
+        var flankedDirections = 0
+        for (pos in surroundingPos) {
+            val isAttacker = layoutMap[pos]?.type == PieceType.ATTACKER
+            val isThrone = pos == Pair(5, 5)
+            if (isAttacker || isThrone) {
+                flankedDirections += 1
+            }
+        }
+        val isEdge = kingPos.first == 0 || kingPos.first == 10 || kingPos.second == 0 || kingPos.second == 10
+        val isLastDefender = true // TODO: Add count to game to check if last defender
+        if (flankedDirections == 4 || (flankedDirections == 3 && isEdge && isLastDefender)) {
+            captures[kingPos] = layoutMap[kingPos]!!
+            layoutMap.remove(kingPos)
+        }
     }
 
     // Returns true if position is in a board corner or center
-    private fun inRestricted(x: Int, y: Int) : Boolean {
+    private fun inRestricted(pos: Pair<Int, Int>) : Boolean {
+        val x = pos.first
+        val y = pos.second
         return (x == 0 && y == 0) || (x == 10 && y == 0) || (x == 0 && y == 10) || (x == 10 && y == 10) || (x == 5 && y == 5)
+    }
+
+    private fun getSurroundingPos(pos: Pair<Int, Int>): List<Pair<Int, Int>> {
+        val x = pos.first
+        val y = pos.second
+        return arrayListOf(Pair(x-1, y), Pair(x+1, y), Pair(x, y-1), Pair(x, y+1))
     }
 
 }
