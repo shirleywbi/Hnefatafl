@@ -41,30 +41,48 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
 
     fun capture(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): List<Piece> {
         var captures: ArrayList<Piece> = arrayListOf()
-        if (isCapture(x, y, 1, 0, layoutMap, piece)) {
+        if (isCaptured(x, y, 1, 0, layoutMap, piece)) {
             layoutMap[Pair(x + 1, y)]?.let { captures.add(it) }
             layoutMap.remove(Pair(x + 1, y))
         }
-        if (isCapture(x, y, -1, 0, layoutMap, piece)) {
+        if (isCaptured(x, y, -1, 0, layoutMap, piece)) {
             layoutMap[Pair(x - 1, y)]?.let { captures.add(it) }
             layoutMap.remove(Pair(x - 1, y))
         }
-        if (isCapture(x, y, 0, 1, layoutMap, piece)) {
+        if (isCaptured(x, y, 0, 1, layoutMap, piece)) {
             layoutMap[Pair(x, y + 1)]?.let { captures.add(it) }
             layoutMap.remove(Pair(x, y + 1))
         }
-        if (isCapture(x, y, 0, -1, layoutMap, piece)) {
+        if (isCaptured(x, y, 0, -1, layoutMap, piece)) {
             layoutMap[Pair(x, y - 1)]?.let { captures.add(it) }
             layoutMap.remove(Pair(x, y - 1))
         }
         return captures
     }
 
+    fun getCapturedPositions(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): List<Pair<Int, Int>> {
+        var captures: ArrayList<Pair<Int, Int>> = arrayListOf()
+        if (isCaptured(x, y, 1, 0, layoutMap, piece)) {
+            layoutMap[Pair(x + 1, y)]?.let { captures.add(Pair(x + 1, y)) }
+        }
+        if (isCaptured(x, y, -1, 0, layoutMap, piece)) {
+            layoutMap[Pair(x - 1, y)]?.let { captures.add(Pair(x - 1, y)) }
+        }
+        if (isCaptured(x, y, 0, 1, layoutMap, piece)) {
+            layoutMap[Pair(x, y + 1)]?.let { captures.add(Pair(x, y + 1)) }
+        }
+        if (isCaptured(x, y, 0, -1, layoutMap, piece)) {
+            layoutMap[Pair(x, y - 1)]?.let { captures.add(Pair(x, y - 1)) }
+        }
+        return captures
+    }
+
     // Capture if piece is surrounded vertically or horizontally by a piece or an empty restricted spot
-    private fun isCapture(x: Int, y: Int, xOffset: Int = 0, yOffset: Int = 0, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): Boolean {
-        return (layoutMap[Pair(x + xOffset, y + yOffset)]?.type != piece &&
-            (layoutMap[Pair(x + xOffset * 2, y + yOffset * 2)]?.type == piece ||
-            (!layoutMap.containsKey(Pair(x + xOffset * 2, y + yOffset * 2)) && inRestricted(x + xOffset * 2, y + yOffset * 2))))
+    private fun isCaptured(x: Int, y: Int, xOffset: Int = 0, yOffset: Int = 0, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): Boolean {
+        val adjacentPieceIsDifferent = layoutMap[Pair(x + xOffset, y + yOffset)]?.type != piece
+        val hasPieceFlank = layoutMap[Pair(x + xOffset * 2, y + yOffset * 2)]?.type == piece
+        val hasCellFlank = !layoutMap.containsKey(Pair(x + xOffset * 2, y + yOffset * 2)) && inRestricted(x + xOffset * 2, y + yOffset * 2)
+        return adjacentPieceIsDifferent && (hasPieceFlank || hasCellFlank)
     }
 
     // Returns true if position is in a board corner or center

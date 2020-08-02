@@ -10,6 +10,7 @@ import androidx.core.view.marginLeft
 import com.shirleywbi.hnefatafl.service.Board
 import com.shirleywbi.hnefatafl.service.Game
 import com.shirleywbi.hnefatafl.ui.howToPlay.HowToPlayActivity
+import com.shirleywbi.hnefatafl.ui.pieces.PieceView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -62,7 +63,14 @@ class MainActivity : AppCompatActivity() {
                     if (gameBoard.canMove(gameBoard.layoutMap[selectedPiecePos], newPiecePos.first, newPiecePos.second)) {
                         pieceView.x = newPiecePos.first * board_layout.size + boardOffsetX
                         pieceView.y = newPiecePos.second * board_layout.size + boardOffsetY
-                        gameBoard.layoutMap[selectedPiecePos]?.let { gameBoard.move(it, newPiecePos.first, newPiecePos.second) }
+                        gameBoard.layoutMap[selectedPiecePos]?.let {
+                            gameBoard.move(it, newPiecePos.first, newPiecePos.second)
+                            val capturePositions: List<Pair<Int, Int>> = it.getCapturedPositions(newPiecePos.first, newPiecePos.second, gameBoard.layoutMap, game.piece)
+                            capturePositions.forEach{ pos ->
+                                var captured: PieceView = board_layout.findViewWithTag(gameBoard.layoutMap[pos]?.label)
+                                board_layout.removeView(captured)
+                            }
+                        }
                     }
                     pieceView.visibility = View.VISIBLE
                     return@setOnDragListener true

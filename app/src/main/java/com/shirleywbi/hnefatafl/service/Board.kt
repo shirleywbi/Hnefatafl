@@ -25,7 +25,6 @@ class Board: Serializable {
         return false
     }
 
-    // TODO: Handle exceptions
     fun move(piece: Piece, x: Int, y: Int) {
         if (canMove(piece, x, y)) {
             layoutMap.remove(Pair(piece.x, piece.y))
