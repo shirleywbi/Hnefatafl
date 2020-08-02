@@ -63,16 +63,16 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
     fun getCapturedPositions(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): List<Pair<Int, Int>> {
         var captures: ArrayList<Pair<Int, Int>> = arrayListOf()
         if (isCaptured(x, y, 1, 0, layoutMap, piece)) {
-            layoutMap[Pair(x + 1, y)]?.let { captures.add(Pair(x + 1, y)) }
+            captures.add(Pair(x + 1, y))
         }
         if (isCaptured(x, y, -1, 0, layoutMap, piece)) {
-            layoutMap[Pair(x - 1, y)]?.let { captures.add(Pair(x - 1, y)) }
+            captures.add(Pair(x - 1, y))
         }
         if (isCaptured(x, y, 0, 1, layoutMap, piece)) {
-            layoutMap[Pair(x, y + 1)]?.let { captures.add(Pair(x, y + 1)) }
+            captures.add(Pair(x, y + 1))
         }
         if (isCaptured(x, y, 0, -1, layoutMap, piece)) {
-            layoutMap[Pair(x, y - 1)]?.let { captures.add(Pair(x, y - 1)) }
+            captures.add(Pair(x, y - 1))
         }
         return captures
     }
