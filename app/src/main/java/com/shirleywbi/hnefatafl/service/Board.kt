@@ -31,7 +31,7 @@ class Board: Serializable {
             piece.move(x, y)
             layoutMap[Pair(x, y)] = piece
             checkDefenderWin(piece)
-            checkAttackerWin(piece, x, y)
+//            checkAttackerWin(piece) // TODO
             nextTurn()
         } else {
             throw Exception("Invalid move")
@@ -49,11 +49,10 @@ class Board: Serializable {
         }
     }
 
-    private fun checkAttackerWin(piece: Piece, x: Int, y: Int) {
-        if (piece.type == PieceType.ATTACKER) {
-            var captures = piece.capture(x, y, layoutMap, this.piece)
-            captures.forEach { capture -> if (capture is KingPiece) isGameOver = true}
-            if (isGameOver) throw Exception("Game over. ${if (this.piece == PieceType.ATTACKER) "You have won!" else "You have lost. Please try again!"}.")
+    fun checkAttackerWin(captured: Piece, playerType: PieceType) {
+        if (captured is KingPiece) {
+            isGameOver = true
+            if (isGameOver) throw Exception("Game over. ${if (playerType == PieceType.ATTACKER) "You have won!" else "You have lost. Please try again!"}.")
         }
     }
 

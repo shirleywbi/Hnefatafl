@@ -39,42 +39,24 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
         y = newY
     }
 
-    fun capture(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): List<Piece> {
-        var captures: ArrayList<Piece> = arrayListOf()
-        if (isCaptured(x, y, 1, 0, layoutMap, piece)) {
-            layoutMap[Pair(x + 1, y)]?.let { captures.add(it) }
-            layoutMap.remove(Pair(x + 1, y))
-        }
-        if (isCaptured(x, y, -1, 0, layoutMap, piece)) {
-            layoutMap[Pair(x - 1, y)]?.let { captures.add(it) }
-            layoutMap.remove(Pair(x - 1, y))
-        }
-        if (isCaptured(x, y, 0, 1, layoutMap, piece)) {
-            layoutMap[Pair(x, y + 1)]?.let { captures.add(it) }
-            layoutMap.remove(Pair(x, y + 1))
-        }
-        if (isCaptured(x, y, 0, -1, layoutMap, piece)) {
-            layoutMap[Pair(x, y - 1)]?.let { captures.add(it) }
-            layoutMap.remove(Pair(x, y - 1))
-        }
+    fun capturePositionsAndPieces(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): HashMap<Pair<Int, Int>, Piece> {
+        val captures: HashMap<Pair<Int, Int>, Piece> = hashMapOf()
+        handleCapture(x, y, 1, 0, layoutMap, piece, captures)
+        handleCapture(x, y, -1, 0, layoutMap, piece, captures)
+        handleCapture(x, y, 0, 1, layoutMap, piece, captures)
+        handleCapture(x, y, 0, -1, layoutMap, piece, captures)
         return captures
     }
 
-    fun getCapturedPositions(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): List<Pair<Int, Int>> {
-        var captures: ArrayList<Pair<Int, Int>> = arrayListOf()
-        if (isCaptured(x, y, 1, 0, layoutMap, piece)) {
-            captures.add(Pair(x + 1, y))
+    /** Handle piece capture by:
+     * (1) Adding position and piece to captures
+     * (2) Remove position from layoutMap
+     * */
+    private fun handleCapture(x: Int, y: Int, xOffset: Int = 0, yOffset: Int = 0, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType, captures: HashMap<Pair<Int, Int>, Piece>) {
+        if (isCaptured(x, y, xOffset, yOffset, layoutMap, piece)) {
+            captures[Pair(x + xOffset, y + yOffset)] = layoutMap[Pair(x + xOffset, y + yOffset)]!!
+            layoutMap.remove(Pair(x + xOffset, y + yOffset))
         }
-        if (isCaptured(x, y, -1, 0, layoutMap, piece)) {
-            captures.add(Pair(x - 1, y))
-        }
-        if (isCaptured(x, y, 0, 1, layoutMap, piece)) {
-            captures.add(Pair(x, y + 1))
-        }
-        if (isCaptured(x, y, 0, -1, layoutMap, piece)) {
-            captures.add(Pair(x, y - 1))
-        }
-        return captures
     }
 
     // Return true if piece is flanked vertically or horizontally by a piece or an empty restricted spot, otherwise return false

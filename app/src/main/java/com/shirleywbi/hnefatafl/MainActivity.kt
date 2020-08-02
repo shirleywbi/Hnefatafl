@@ -9,6 +9,7 @@ import android.view.View
 import androidx.core.view.marginLeft
 import com.shirleywbi.hnefatafl.service.Board
 import com.shirleywbi.hnefatafl.service.Game
+import com.shirleywbi.hnefatafl.service.pieces.Piece
 import com.shirleywbi.hnefatafl.ui.howToPlay.HowToPlayActivity
 import com.shirleywbi.hnefatafl.ui.pieces.PieceView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -65,9 +66,10 @@ class MainActivity : AppCompatActivity() {
                         pieceView.y = newPiecePos.second * board_layout.size + boardOffsetY
                         gameBoard.layoutMap[selectedPiecePos]?.let {
                             gameBoard.move(it, newPiecePos.first, newPiecePos.second)
-                            val capturePositions: List<Pair<Int, Int>> = it.getCapturedPositions(newPiecePos.first, newPiecePos.second, gameBoard.layoutMap, game.piece)
-                            capturePositions.forEach{ pos ->
-                                var captured: PieceView = board_layout.findViewWithTag(gameBoard.layoutMap[pos]?.label)
+                            val capturedPositionsAndPieces: HashMap<Pair<Int, Int>, Piece> = it.capturePositionsAndPieces(newPiecePos.first, newPiecePos.second, gameBoard.layoutMap, game.piece)
+                            capturedPositionsAndPieces.forEach{ (pos, piece) ->
+                                gameBoard.checkAttackerWin(piece, game.piece)
+                                var captured: PieceView = board_layout.findViewWithTag(capturedPositionsAndPieces[pos]?.label)
                                 board_layout.removeView(captured)
                             }
                         }
