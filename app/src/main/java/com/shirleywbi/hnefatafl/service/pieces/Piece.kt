@@ -3,7 +3,7 @@ package com.shirleywbi.hnefatafl.service.pieces
 import java.io.Serializable
 import kotlin.math.abs
 
-abstract class Piece(var x: Int, var y: Int, var type: PieceType): Serializable {
+abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: String): Serializable {
 
     /**
      * Returns true if:

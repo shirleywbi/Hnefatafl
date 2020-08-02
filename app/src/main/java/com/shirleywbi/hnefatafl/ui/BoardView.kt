@@ -44,9 +44,6 @@ class BoardView : ConstraintLayout {
 
     // TODO: Observer to watch pieces change
     fun addPieces(layoutMap: HashMap<Pair<Int, Int>, Piece>) {
-        var attackerCount = 0
-        var defenderCount = 0
-
         for ((pos, piece) in layoutMap) {
             val pieceView : PieceView =
                 when (piece.type) {
@@ -54,9 +51,7 @@ class BoardView : ConstraintLayout {
                     PieceType.DEFENDER -> DefenderPieceView(size, context)
                     PieceType.KING -> KingPieceView(size, context)
                 }
-            val type = PieceType.ATTACKER
-
-            pieceView.tag = if (type == PieceType.ATTACKER) "attacker-${attackerCount++}" else "defender-${defenderCount++}"
+            pieceView.tag = piece.label
             pieceView.x = (pos.first * size).toFloat()
             pieceView.y = (pos.second * size).toFloat()
             this.addView(pieceView)
