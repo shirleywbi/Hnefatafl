@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                         pieceView.y = newPiecePos.second * board_layout.size + boardOffsetY
                         gameBoard.layoutMap[selectedPiecePos]?.let {
                             gameBoard.move(it, newPiecePos.first, newPiecePos.second)
-                            val capturedPositionsAndPieces: HashMap<Pair<Int, Int>, Piece> = it.capturePositionsAndPieces(newPiecePos.first, newPiecePos.second, gameBoard.layoutMap, game.piece)
+                            val capturedPositionsAndPieces: HashMap<Pair<Int, Int>, Piece> = it.capturePositionsAndPieces(newPiecePos.first, newPiecePos.second, gameBoard.layoutMap)
                             capturedPositionsAndPieces.forEach{ (pos, piece) ->
                                 gameBoard.checkAttackerWin(piece, game.piece)
                                 var captured: PieceView = board_layout.findViewWithTag(capturedPositionsAndPieces[pos]?.label)

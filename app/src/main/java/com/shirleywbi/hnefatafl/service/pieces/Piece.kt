@@ -40,13 +40,13 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
         y = newY
     }
 
-    fun capturePositionsAndPieces(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, player: PieceType): HashMap<Pair<Int, Int>, Piece> {
+    fun capturePositionsAndPieces(x: Int, y: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>): HashMap<Pair<Int, Int>, Piece> {
         val captures: HashMap<Pair<Int, Int>, Piece> = hashMapOf()
         val surroundingPos = getSurroundingPos(Pair(x, y))
         for (pos in surroundingPos) {
-            val hasAdjacentEnemy = layoutMap.containsKey(pos) && layoutMap[pos]?.type != player
+            val hasAdjacentEnemy = layoutMap.containsKey(pos) && layoutMap[pos]?.type != layoutMap[Pair(x, y)]?.type
             if (hasAdjacentEnemy) {
-                handleCapture(Pair(x, y), layoutMap[pos]!!, layoutMap, player, captures)
+                handleCapture(Pair(x, y), layoutMap[pos]!!, layoutMap, layoutMap[Pair(x, y)]?.type!!, captures)
             }
         }
         return captures
