@@ -18,9 +18,13 @@ class Board: Serializable {
         setupPieces()
     }
 
+    // Alternate turns to determine whether piece can move, starting with attacker
     fun canMove(piece: Piece?, x: Int, y: Int): Boolean {
         if (piece != null) {
-            return piece.canMove(x, y, layoutMap, this.piece)
+            if (piece.type == PieceType.ATTACKER && isAttackerTurn)
+                return piece.canMove(x, y, layoutMap, this.piece)
+            if (piece.type == PieceType.DEFENDER && !isAttackerTurn)
+                return piece.canMove(x, y, layoutMap, this.piece)
         }
         return false
     }
