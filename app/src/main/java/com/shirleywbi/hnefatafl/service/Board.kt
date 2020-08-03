@@ -4,6 +4,7 @@ import com.shirleywbi.hnefatafl.service.pieces.ChessPiece
 import com.shirleywbi.hnefatafl.service.pieces.KingPiece
 import com.shirleywbi.hnefatafl.service.pieces.Piece
 import com.shirleywbi.hnefatafl.service.pieces.PieceType
+import com.shirleywbi.hnefatafl.util.isDefender
 import java.io.Serializable
 
 class Board: Serializable {
@@ -23,7 +24,7 @@ class Board: Serializable {
         if (piece != null) {
             if (piece.type == PieceType.ATTACKER && isAttackerTurn)
                 return piece.canMove(x, y, layoutMap, this.piece)
-            if ((piece.type == PieceType.DEFENDER || piece.type == PieceType.KING) && !isAttackerTurn)
+            if (isDefender(piece) && !isAttackerTurn)
                 return piece.canMove(x, y, layoutMap, this.piece)
         }
         return false
