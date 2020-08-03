@@ -11,6 +11,7 @@ import java.io.Serializable
 class Board: Serializable {
 
     var isGameOver = false
+    lateinit var gameOverStatus: GameOverStatus
     var isAttackerTurn = true
 
     var layoutMap: HashMap<Pair<Int, Int>, Piece> = hashMapOf()
@@ -59,14 +60,14 @@ class Board: Serializable {
     private fun checkDefenderWin(piece: Piece) {
         if (piece is KingPiece && piece.hasWon()) {
             isGameOver = true
-            throw Exception("Game over. ${if (this.playerType == PieceType.DEFENDER) "You have won!" else "You have lost. Please try again!"}.")
+            gameOverStatus = if (this.playerType == PieceType.DEFENDER) GameOverStatus.WIN else GameOverStatus.LOSE
         }
     }
 
-    fun checkAttackerWin(captured: Piece, playerType: PieceType) {
+    fun checkAttackerWin(captured: Piece) {
         if (captured is KingPiece) {
             isGameOver = true
-            if (isGameOver) throw Exception("Game over. ${if (playerType == PieceType.ATTACKER) "You have won!" else "You have lost. Please try again!"}.")
+            gameOverStatus = if (this.playerType == PieceType.ATTACKER) GameOverStatus.WIN else GameOverStatus.LOSE
         }
     }
 
@@ -77,11 +78,13 @@ class Board: Serializable {
      * (3) The king cannot reach a refuge square and the attacker cannot reach the king **NOT IMPLEMENTED**
      * (4) The same position of all pieces on the board arises 3x with the same side to move
      */
-    private fun checkDraw(): Boolean {
+    private fun checkDraw() {
         val tooManyRepetitions = boardHistory[layoutMap]!! >= 3
         val noMoreMoves = if (isAttackerTurn) checkNoMoreMoves(PieceType.ATTACKER) else checkNoMoreMoves(PieceType.DEFENDER) || checkNoMoreMoves(PieceType.KING)
-        Log.i("[GAME]", "No more moves. It is a draw!")
-        return tooManyRepetitions || noMoreMoves
+        if (tooManyRepetitions || noMoreMoves) {
+            isGameOver = true
+            gameOverStatus = GameOverStatus.DRAW
+        }
     }
 
     private fun checkNoMoreMoves(turn: PieceType): Boolean {

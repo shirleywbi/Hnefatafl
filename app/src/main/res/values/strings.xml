@@ -35,4 +35,13 @@
         \n\n\1.	If you can no longer move your pieces, you lose the game.
         \n\n\2.	If you can’t end the game or there are X repetitions, it is a draw.
     </string>
+
+    <!--Game Over-->
+    <string name="game_over_win">You Win!</string>
+    <string name="game_over_win_description"></string>
+    <string name="game_over_lose">You Lost!</string>
+    <string name="game_over_lose_description"></string>
+    <string name="game_over_draw">It\'s a Draw!</string>
+    <string name="game_over_draw_description"></string>
+    <string name="new_game">New Game</string>
 </resources>

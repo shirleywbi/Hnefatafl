@@ -5,3 +5,5 @@
 - Added board UI
 - Added how to play instructions
 - Added capture functionality for normal pieces and king piece
+- Added game over dialog
+- Added draw logic when game is over

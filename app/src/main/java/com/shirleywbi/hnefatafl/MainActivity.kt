@@ -9,7 +9,9 @@ import android.view.View
 import androidx.core.view.marginLeft
 import com.shirleywbi.hnefatafl.service.Board
 import com.shirleywbi.hnefatafl.service.Game
+import com.shirleywbi.hnefatafl.service.GameOverStatus
 import com.shirleywbi.hnefatafl.service.pieces.Piece
+import com.shirleywbi.hnefatafl.ui.GameOverFragment
 import com.shirleywbi.hnefatafl.ui.howToPlay.HowToPlayActivity
 import com.shirleywbi.hnefatafl.ui.pieces.PieceView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,6 +35,10 @@ class MainActivity : AppCompatActivity() {
 
         board_layout.addPieces(gameBoard.layoutMap)
         allowDrag(board_layout)
+
+        if (gameBoard.isGameOver) {
+            showGameOverDialog(GameOverStatus.WIN)
+        }
     }
 
     private fun allowDrag(dragDestinationView: View) {
@@ -68,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                             gameBoard.move(it, newPiecePos.first, newPiecePos.second)
                             val capturedPositionsAndPieces: HashMap<Pair<Int, Int>, Piece> = it.capturePositionsAndPieces(newPiecePos.first, newPiecePos.second, gameBoard.layoutMap)
                             capturedPositionsAndPieces.forEach{ (pos, piece) ->
-                                gameBoard.checkAttackerWin(piece, game.piece)
+                                gameBoard.checkAttackerWin(piece)
                                 var captured: PieceView = board_layout.findViewWithTag(capturedPositionsAndPieces[pos]?.label)
                                 board_layout.removeView(captured)
                             }
@@ -89,5 +95,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showGameOverDialog(status: GameOverStatus) {
+        val dialog = GameOverFragment(status)
+        dialog.show(supportFragmentManager, "GameOverFragment")
+    }
 
 }
