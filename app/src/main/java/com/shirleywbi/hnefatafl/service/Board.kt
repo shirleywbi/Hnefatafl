@@ -23,7 +23,7 @@ class Board: Serializable {
         if (piece != null) {
             if (piece.type == PieceType.ATTACKER && isAttackerTurn)
                 return piece.canMove(x, y, layoutMap, this.piece)
-            if (piece.type == PieceType.DEFENDER && !isAttackerTurn)
+            if ((piece.type == PieceType.DEFENDER || piece.type == PieceType.KING) && !isAttackerTurn)
                 return piece.canMove(x, y, layoutMap, this.piece)
         }
         return false

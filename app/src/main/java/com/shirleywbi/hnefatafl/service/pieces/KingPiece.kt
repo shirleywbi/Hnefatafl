@@ -1,6 +1,6 @@
 package com.shirleywbi.hnefatafl.service.pieces
 
-class KingPiece(x: Int, y: Int, type: PieceType = PieceType.DEFENDER, label: String = "king") : Piece(x, y, type, label) {
+class KingPiece(x: Int, y: Int, type: PieceType = PieceType.KING, label: String = "king") : Piece(x, y, type, label) {
 
     // King is on the corner of the board
     fun hasWon(): Boolean {
