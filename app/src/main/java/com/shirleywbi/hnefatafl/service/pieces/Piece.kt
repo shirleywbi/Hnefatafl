@@ -101,7 +101,7 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
             }
         }
         val isEdge = kingPos.first == 0 || kingPos.first == 10 || kingPos.second == 0 || kingPos.second == 10
-        val isLastDefender = true // TODO: Add count to game to check if last defender
+        val isLastDefender = layoutMap.values.find {piece -> piece.type == PieceType.DEFENDER} == null
         if (flankedDirections == 4 || (flankedDirections == 3 && isEdge && isLastDefender)) {
             captures[kingPos] = layoutMap[kingPos]!!
             layoutMap.remove(kingPos)
@@ -113,5 +113,4 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
         val y = pos.second
         return arrayListOf(Pair(x-1, y), Pair(x+1, y), Pair(x, y-1), Pair(x, y+1))
     }
-
 }
