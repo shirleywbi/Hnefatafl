@@ -4,6 +4,7 @@ import com.shirleywbi.hnefatafl.service.pieces.ChessPiece
 import com.shirleywbi.hnefatafl.service.pieces.KingPiece
 import com.shirleywbi.hnefatafl.service.pieces.Piece
 import com.shirleywbi.hnefatafl.service.pieces.PieceType
+import com.shirleywbi.hnefatafl.util.getSurroundingPos
 import com.shirleywbi.hnefatafl.util.isDefender
 import java.io.Serializable
 
@@ -37,6 +38,7 @@ class Board: Serializable {
             layoutMap[Pair(x, y)] = piece
             checkDefenderWin(piece)
 //            checkAttackerWin(piece) // TODO
+            checkDraw()
             nextTurn()
         } else {
             throw Exception("Invalid move")
@@ -59,6 +61,26 @@ class Board: Serializable {
             isGameOver = true
             if (isGameOver) throw Exception("Game over. ${if (playerType == PieceType.ATTACKER) "You have won!" else "You have lost. Please try again!"}.")
         }
+    }
+
+    fun checkDraw(): Boolean {
+        var isDraw = false
+        isDraw = if (isAttackerTurn) checkNoMoreMoves(PieceType.ATTACKER) else checkNoMoreMoves(PieceType.DEFENDER) || checkNoMoreMoves(PieceType.KING)
+        Log.i("[GAME]", "No more moves. It is a draw!")
+        return isDraw
+    }
+
+    private fun checkNoMoreMoves(turn: PieceType): Boolean {
+        val pieces = layoutMap.values.filter{ piece -> piece.type == turn }
+        for (piece in pieces) {
+            val surroundings = getSurroundingPos(Pair(piece.x, piece.y))
+            for (surrounding in surroundings) {
+                if (!layoutMap.containsKey(surrounding)) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     private fun setupPieces() {
