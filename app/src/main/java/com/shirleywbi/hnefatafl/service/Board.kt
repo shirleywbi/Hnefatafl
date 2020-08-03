@@ -73,11 +73,11 @@ class Board: Serializable {
     /**
      * Return true if:
      * (1) Either player has no more moves on their turn
-     * (2) ???
-     * (3) ???
+     * (2) The king is at the side of the board and the attacking player cannot move him into a position where he can be taken **NOT IMPLEMENTED**
+     * (3) The king cannot reach a refuge square and the attacker cannot reach the king **NOT IMPLEMENTED**
      * (4) The same position of all pieces on the board arises 3x with the same side to move
      */
-    fun checkDraw(): Boolean {
+    private fun checkDraw(): Boolean {
         val tooManyRepetitions = boardHistory[layoutMap]!! >= 3
         val noMoreMoves = if (isAttackerTurn) checkNoMoreMoves(PieceType.ATTACKER) else checkNoMoreMoves(PieceType.DEFENDER) || checkNoMoreMoves(PieceType.KING)
         Log.i("[GAME]", "No more moves. It is a draw!")
