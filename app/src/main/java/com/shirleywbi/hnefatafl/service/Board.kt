@@ -14,7 +14,8 @@ class Board: Serializable {
     var isAttackerTurn = true
 
     var layoutMap: HashMap<Pair<Int, Int>, Piece> = hashMapOf()
-    lateinit var piece: PieceType
+    var boardHistory: HashMap<HashMap<Pair<Int, Int>, Piece>, Int> = hashMapOf()
+    lateinit var playerType: PieceType
 
     constructor() {
         setupPieces()
@@ -24,9 +25,9 @@ class Board: Serializable {
     fun canMove(piece: Piece?, x: Int, y: Int): Boolean {
         if (piece != null) {
             if (piece.type == PieceType.ATTACKER && isAttackerTurn)
-                return piece.canMove(x, y, layoutMap, this.piece)
+                return piece.canMove(x, y, layoutMap, this.playerType)
             if (isDefender(piece) && !isAttackerTurn)
-                return piece.canMove(x, y, layoutMap, this.piece)
+                return piece.canMove(x, y, layoutMap, this.playerType)
         }
         return false
     }
@@ -36,6 +37,8 @@ class Board: Serializable {
             layoutMap.remove(Pair(piece.x, piece.y))
             piece.move(x, y)
             layoutMap[Pair(x, y)] = piece
+            logBoardHistory()
+
             checkDefenderWin(piece)
 //            checkAttackerWin(piece) // TODO
             checkDraw()
@@ -49,10 +52,14 @@ class Board: Serializable {
         isAttackerTurn = !isAttackerTurn
     }
 
+    private fun logBoardHistory() {
+        boardHistory[layoutMap] = if (boardHistory.containsKey(layoutMap)) boardHistory[layoutMap]!!.plus(1) else 1
+    }
+
     private fun checkDefenderWin(piece: Piece) {
         if (piece is KingPiece && piece.hasWon()) {
             isGameOver = true
-            throw Exception("Game over. ${if (this.piece == PieceType.DEFENDER) "You have won!" else "You have lost. Please try again!"}.")
+            throw Exception("Game over. ${if (this.playerType == PieceType.DEFENDER) "You have won!" else "You have lost. Please try again!"}.")
         }
     }
 
@@ -63,11 +70,18 @@ class Board: Serializable {
         }
     }
 
+    /**
+     * Return true if:
+     * (1) Either player has no more moves on their turn
+     * (2) ???
+     * (3) ???
+     * (4) The same position of all pieces on the board arises 3x with the same side to move
+     */
     fun checkDraw(): Boolean {
-        var isDraw = false
-        isDraw = if (isAttackerTurn) checkNoMoreMoves(PieceType.ATTACKER) else checkNoMoreMoves(PieceType.DEFENDER) || checkNoMoreMoves(PieceType.KING)
+        val tooManyRepetitions = boardHistory[layoutMap]!! >= 3
+        val noMoreMoves = if (isAttackerTurn) checkNoMoreMoves(PieceType.ATTACKER) else checkNoMoreMoves(PieceType.DEFENDER) || checkNoMoreMoves(PieceType.KING)
         Log.i("[GAME]", "No more moves. It is a draw!")
-        return isDraw
+        return tooManyRepetitions || noMoreMoves
     }
 
     private fun checkNoMoreMoves(turn: PieceType): Boolean {

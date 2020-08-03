@@ -10,7 +10,7 @@ class Game: Serializable {
 
     fun selectPlayer(type: PieceType) {
         piece = type
-        gameBoard.piece = type
+        gameBoard.playerType = type
     }
 
 }
