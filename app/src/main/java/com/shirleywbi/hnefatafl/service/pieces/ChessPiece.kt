@@ -1,5 +1,7 @@
 package com.shirleywbi.hnefatafl.service.pieces
 
+import com.shirleywbi.hnefatafl.util.inRestricted
+
 class ChessPiece(x: Int, y: Int, type: PieceType, label: String): Piece(x, y, type, label) {
 
     // Non-king pieces cannot move to restricted positions
@@ -9,7 +11,7 @@ class ChessPiece(x: Int, y: Int, type: PieceType, label: String): Piece(x, y, ty
         layoutMap: HashMap<Pair<Int, Int>, Piece>,
         piece: PieceType
     ): Boolean {
-        if ((newX == 0 && newY == 0) || (newX == 10 && newY == 0) || (newX == 0 && newY == 10) || (newX == 10 && newY == 10)) return false
+        if (inRestricted(Pair(newX, newY))) return false
         return super.canMove(newX, newY, layoutMap, piece)
     }
 

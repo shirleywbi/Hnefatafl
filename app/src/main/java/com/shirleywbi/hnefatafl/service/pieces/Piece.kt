@@ -1,5 +1,6 @@
 package com.shirleywbi.hnefatafl.service.pieces
 
+import com.shirleywbi.hnefatafl.util.inRestricted
 import java.io.Serializable
 import kotlin.math.abs
 
@@ -11,7 +12,7 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
      * (2) Nothing is in the way
      */
     open fun canMove(newX: Int, newY: Int, layoutMap: HashMap<Pair<Int, Int>, Piece>, piece: PieceType): Boolean {
-        if (type != piece || layoutMap.containsKey(Pair(newX, newY))) return false
+        if (layoutMap.containsKey(Pair(newX, newY))) return false
 
         if (newX == x && newY == y || // movement: none
             newX != x && newY != y) { // movement: diagonal
@@ -105,13 +106,6 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
             captures[kingPos] = layoutMap[kingPos]!!
             layoutMap.remove(kingPos)
         }
-    }
-
-    // Returns true if position is in a board corner or center
-    private fun inRestricted(pos: Pair<Int, Int>) : Boolean {
-        val x = pos.first
-        val y = pos.second
-        return (x == 0 && y == 0) || (x == 10 && y == 0) || (x == 0 && y == 10) || (x == 10 && y == 10) || (x == 5 && y == 5)
     }
 
     private fun getSurroundingPos(pos: Pair<Int, Int>): List<Pair<Int, Int>> {
