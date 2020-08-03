@@ -1,5 +1,6 @@
 package com.shirleywbi.hnefatafl.service.pieces
 
+import com.shirleywbi.hnefatafl.util.getSurroundingPos
 import com.shirleywbi.hnefatafl.util.inRestricted
 import java.io.Serializable
 import kotlin.math.abs
@@ -106,11 +107,5 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
             captures[kingPos] = layoutMap[kingPos]!!
             layoutMap.remove(kingPos)
         }
-    }
-
-    private fun getSurroundingPos(pos: Pair<Int, Int>): List<Pair<Int, Int>> {
-        val x = pos.first
-        val y = pos.second
-        return arrayListOf(Pair(x-1, y), Pair(x+1, y), Pair(x, y-1), Pair(x, y+1))
     }
 }
