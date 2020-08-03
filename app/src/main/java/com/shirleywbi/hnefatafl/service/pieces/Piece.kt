@@ -67,8 +67,8 @@ abstract class Piece(var x: Int, var y: Int, var type: PieceType, var label: Str
 
         val flankPos = Pair(possibleCapture.x + xOffset, possibleCapture.y + yOffset)
         val isFlankedByEnemyPiece = layoutMap.containsKey(flankPos) && layoutMap[flankPos]?.type == player
-        val isFlankedByCell = inRestricted(flankPos)
-        if (isFlankedByEnemyPiece || isFlankedByCell) {
+        val isFlankedByEmptyCell = inRestricted(flankPos) && !layoutMap.containsKey(flankPos)
+        if (isFlankedByEnemyPiece || isFlankedByEmptyCell) {
             captures[Pair(possibleCapture.x, possibleCapture.y)] = possibleCapture
             layoutMap.remove(Pair(possibleCapture.x, possibleCapture.y))
         }
