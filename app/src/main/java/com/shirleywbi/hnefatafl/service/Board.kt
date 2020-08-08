@@ -93,11 +93,11 @@ class Board: Serializable {
             val surroundings = getSurroundingPos(Pair(piece.x, piece.y))
             for (surrounding in surroundings) {
                 if (!layoutMap.containsKey(surrounding)) {
-                    return true
+                    return false
                 }
             }
         }
-        return false
+        return true
     }
 
     private fun setupPieces() {

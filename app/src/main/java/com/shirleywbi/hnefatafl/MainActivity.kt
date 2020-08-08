@@ -35,10 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         board_layout.addPieces(gameBoard.layoutMap)
         allowDrag(board_layout)
-
-        if (gameBoard.isGameOver) {
-            showGameOverDialog(GameOverStatus.WIN)
-        }
     }
 
     private fun allowDrag(dragDestinationView: View) {
@@ -87,6 +83,9 @@ class MainActivity : AppCompatActivity() {
                     if (!event.result) {
                         val draggableView = event.localState as View
                         draggableView.visibility = View.VISIBLE
+                    }
+                    if (gameBoard.isGameOver) {
+                        showGameOverDialog(gameBoard.gameOverStatus)
                     }
                 }
             }
