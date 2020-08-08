@@ -24,4 +24,5 @@ fun getSurroundingPos(pos: Pair<Int, Int>): List<Pair<Int, Int>> {
     val x = pos.first
     val y = pos.second
     return arrayListOf(Pair(x-1, y), Pair(x+1, y), Pair(x, y-1), Pair(x, y+1))
+        .filter{ pos -> pos.first in 0..10 && pos.second in 0..10 }
 }

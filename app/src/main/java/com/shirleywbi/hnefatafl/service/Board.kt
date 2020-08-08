@@ -42,8 +42,8 @@ class Board: Serializable {
 
             checkDefenderWin(piece)
 //            checkAttackerWin(piece) // TODO
-            checkDraw()
             nextTurn()
+            checkDraw()
         } else {
             throw Exception("Invalid move")
         }
@@ -90,7 +90,7 @@ class Board: Serializable {
     private fun checkNoMoreMoves(turn: PieceType): Boolean {
         val pieces = layoutMap.values.filter{ piece -> piece.type == turn }
         for (piece in pieces) {
-            val surroundings = getSurroundingPos(Pair(piece.x, piece.y))
+            var surroundings = getSurroundingPos(Pair(piece.x, piece.y))
             for (surrounding in surroundings) {
                 if (!layoutMap.containsKey(surrounding)) {
                     return false
