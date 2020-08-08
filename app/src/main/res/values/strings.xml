@@ -4,6 +4,11 @@
     <string name="defender">Defender</string>
     <string name="select_player">Choose your player</string>
 
+    <!--Game Play-->
+    <string name="forfeit">Forfeit</string>
+    <string name="undo">Undo</string>
+    <string name="turn">Turn: </string>
+
     <!--Game Guide-->
     <string name="how_to_play">How to Play</string>
     <string name="htp_goal_details">There are two types of Vikings in this world, <b>Attackers</b> and <b>Defenders</b>.

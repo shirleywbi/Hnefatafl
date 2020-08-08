@@ -12,6 +12,7 @@ import com.shirleywbi.hnefatafl.service.Game
 import com.shirleywbi.hnefatafl.service.GameOverStatus
 import com.shirleywbi.hnefatafl.service.pieces.Piece
 import com.shirleywbi.hnefatafl.ui.GameOverFragment
+import com.shirleywbi.hnefatafl.ui.GameStartActivity
 import com.shirleywbi.hnefatafl.ui.howToPlay.HowToPlayActivity
 import com.shirleywbi.hnefatafl.ui.pieces.PieceView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,15 +27,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        more_info_btn.setOnClickListener {
-            startActivity(Intent(this, HowToPlayActivity::class.java))
-        }
-
         game = intent.getSerializableExtra("GAME") as Game
         gameBoard = game.gameBoard
 
+        setListeners()
         board_layout.addPieces(gameBoard.layoutMap)
         allowDrag(board_layout)
+    }
+
+    private fun setListeners() {
+        more_info_btn.setOnClickListener {
+            startActivity(Intent(this, HowToPlayActivity::class.java))
+        }
+        forfeit_btn.setOnClickListener {
+            startActivity(Intent(this, GameStartActivity::class.java))
+        }
+        undo_btn.setOnClickListener {
+            /**To be implemented:
+             * - Revert gameBoard.boardHistory by one
+             * - Update board view
+             * */
+        }
     }
 
     private fun allowDrag(dragDestinationView: View) {
@@ -75,6 +88,7 @@ class MainActivity : AppCompatActivity() {
                                 board_layout.removeView(captured)
                             }
                         }
+                        player_turn_text.text = getString(if (gameBoard.isAttackerTurn) R.string.attacker else R.string.defender)
                     }
                     pieceView.visibility = View.VISIBLE
                     return@setOnDragListener true
