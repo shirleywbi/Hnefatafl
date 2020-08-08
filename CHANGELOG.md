@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.1] - 2020-08-08
+### Updates
+- Update icon launcher
+
 ## [0.0.0] - 2020-08-03
 ### Updates
 - Added board UI
