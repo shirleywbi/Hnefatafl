@@ -1,6 +1,5 @@
 package com.shirleywbi.hnefatafl.service
 
-import com.shirleywbi.hnefatafl.service.pieces.ChessPiece
 import com.shirleywbi.hnefatafl.service.pieces.KingPiece
 import com.shirleywbi.hnefatafl.service.pieces.Piece
 import com.shirleywbi.hnefatafl.service.pieces.PieceType
@@ -16,19 +15,20 @@ class Board: Serializable {
 
     var layoutMap: HashMap<Pair<Int, Int>, Piece>
     var boardHistory: HashMap<HashMap<Pair<Int, Int>, Piece>, Int> = hashMapOf()
-    lateinit var playerType: PieceType
+    var playerType: PieceType
 
-    constructor(layoutMap: HashMap<Pair<Int, Int>, Piece>) {
+    constructor(layoutMap: HashMap<Pair<Int, Int>, Piece>, playerType: PieceType) {
         this.layoutMap = layoutMap
+        this.playerType = playerType
     }
 
     // Alternate turns to determine whether piece can move, starting with attacker
     fun canMove(piece: Piece?, x: Int, y: Int): Boolean {
         if (piece != null) {
             if (piece.type == PieceType.ATTACKER && isAttackerTurn)
-                return piece.canMove(x, y, layoutMap, this.playerType)
+                return piece.canMove(x, y, layoutMap, playerType)
             if (isDefender(piece) && !isAttackerTurn)
-                return piece.canMove(x, y, layoutMap, this.playerType)
+                return piece.canMove(x, y, layoutMap, playerType)
         }
         return false
     }

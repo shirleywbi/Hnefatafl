@@ -13,8 +13,7 @@ class Game: Serializable {
 
     fun selectPlayer(type: PieceType) {
         piece = type
-        gameBoard = Board(generatePieceLayout())
-        gameBoard.playerType = type
+        gameBoard = Board(generatePieceLayout(), type)
     }
 
     private fun generatePieceLayout(): HashMap<Pair<Int, Int>, Piece> {

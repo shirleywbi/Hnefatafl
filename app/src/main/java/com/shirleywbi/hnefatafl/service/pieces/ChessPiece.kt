@@ -2,7 +2,7 @@ package com.shirleywbi.hnefatafl.service.pieces
 
 import com.shirleywbi.hnefatafl.util.inRestricted
 
-class ChessPiece(x: Int, y: Int, type: PieceType, label: String): Piece(x, y, type, label) {
+class ChessPiece(x: Int, y: Int, type: PieceType, label: String = ""): Piece(x, y, type, label) {
 
     // Non-king pieces cannot move to restricted positions
     override fun canMove(
