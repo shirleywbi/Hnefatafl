@@ -58,7 +58,8 @@ class Board: Serializable {
     }
 
     private fun checkDefenderWin(piece: Piece) {
-        if (piece is KingPiece && piece.hasWon()) {
+        val lessThanThreeAttackers = layoutMap.values.filter{ p -> p.type == PieceType.ATTACKER }.size < 3
+        if (piece is KingPiece && piece.hasWon() || lessThanThreeAttackers) {
             isGameOver = true
             gameOverStatus = if (this.playerType == PieceType.DEFENDER) GameOverStatus.WIN else GameOverStatus.LOSE
         }
