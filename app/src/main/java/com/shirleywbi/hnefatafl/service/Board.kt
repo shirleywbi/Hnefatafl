@@ -57,7 +57,7 @@ class Board: Serializable {
         boardHistory[layoutMap] = if (boardHistory.containsKey(layoutMap)) boardHistory[layoutMap]!!.plus(1) else 1
     }
 
-    private fun checkDefenderWin(piece: Piece) {
+    fun checkDefenderWin(piece: Piece) {
         val lessThanThreeAttackers = layoutMap.values.filter{ p -> p.type == PieceType.ATTACKER }.size < 3
         if (piece is KingPiece && piece.hasWon() || lessThanThreeAttackers) {
             isGameOver = true
@@ -79,7 +79,7 @@ class Board: Serializable {
      * (3) The king cannot reach a refuge square and the attacker cannot reach the king **NOT IMPLEMENTED**
      * (4) The same position of all pieces on the board arises 3x with the same side to move
      */
-    private fun checkDraw() {
+    fun checkDraw() {
         val tooManyRepetitions = boardHistory[layoutMap]!! >= 3
         val noMoreMoves = if (isAttackerTurn) checkNoMoreMoves(PieceType.ATTACKER) else checkNoMoreMoves(PieceType.DEFENDER) || checkNoMoreMoves(PieceType.KING)
         if (tooManyRepetitions || noMoreMoves) {

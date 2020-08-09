@@ -6,6 +6,7 @@
 - Added forfeit button
 - Added undo button
 - Added player turn
+- Added test coverage for moving pieces, captures, and basic win/loss
 
 ### Bugs
 - Fixed draw when on board edge
